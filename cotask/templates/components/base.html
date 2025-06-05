@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- INCLUDE CSS -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <!-- Логотип -->
+                <a class="navbar-brand" href="#">
+                    Co-Task
+                </a>
+                
+                <!-- Кнопка для мобильных устройств -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <!-- Навигационное меню -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">О нас</a>
+                        </li>
+                        {% comment %} <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                Услуги
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Веб-разработка</a></li>
+                                <li><a class="dropdown-item" href="#">Дизайн</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Консультации</a></li>
+                            </ul>
+                        </li> {% endcomment %}
+                    </ul>
+                    
+                    <!-- Поиск и кнопки -->
+                    {% if request.user.is_authenticated %}
+                        {% comment %} <a href="{% url "profile_detail" request.user.profile.slug %}" type="button" class="btn btn-secondary me-2"> {{ request.user.username }}</a>
+                        <a href="{% url "logout" %}" type="button" class="btn btn-primary">Деавторизация</a> {% endcomment %}
+                    {% else %}
+                        <div class="text-end">
+                            <a href="{% url "login" %}" type="button" class="btn btn-light text-dark me-2">Авторизация</a>
+                            <a href="{% url "reg" %}" type="button" class="btn btn-primary">Регистрация</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

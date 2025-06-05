@@ -1,0 +1,80 @@
+{% extends 'user/auth.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">Регистрация аккаунта</h2>
+                    
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_first_name" class="form-label">Имя</label>
+                                {{ form.first_name }}
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="id_last_name" class="form-label">Фамилия</label>
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Имя пользователя</label>
+                            {{ form.username }}
+                            <div class="form-text">Не более 150 символов. Только буквы, цифры и @/./+/-/_.</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">Email</label>
+                            {{ form.email }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_password1" class="form-label">Пароль</label>
+                            {{ form.password1 }}
+                            <div class="form-text">
+                                <ul>
+                                    <li>Не менее 8 символов</li>
+                                    <li>Не должен быть похож на имя пользователя</li>
+                                    <li>Не должен быть слишком простым</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="id_password2" class="form-label">Подтверждение пароля</label>
+                            {{ form.password2 }}
+                        </div>
+                        
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-success btn-lg">Зарегистрироваться</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="card-footer py-3 border-top-0 bg-transparent">
+                    <div class="text-center">
+                        Уже есть аккаунт? <a href="{% url 'login' %}">Войдите</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

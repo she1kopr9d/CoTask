@@ -1,0 +1,33 @@
+networks:
+  net:
+
+services:
+  site:
+    build: ./cotask
+    container_name: site
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "80:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - net
+
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=notification_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - net
+
+
+volumes:
+  postgres_data: 
