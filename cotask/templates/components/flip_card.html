@@ -1,0 +1,21 @@
+
+{% load static %}
+
+<div class="flip-card-wrapper" {% if onClick %}onclick="{{ onClick }}"{% endif %}>
+  <div class="flip-card">
+    <!-- Лицевая сторона -->
+    <div class="flip-card-front" style="background-color: {{ color|default:'#3498db' }}">
+      {% if logo %}
+        <img src="{% static logo %}" alt="{{ title }}" class="card-logo">
+      {% endif %}
+      <h3 class="card-title">{{ title }}</h3>
+    </div>
+    
+    <!-- Обратная сторона -->
+    <div class="flip-card-back">
+      <div class="card-content">
+        <p class="card-description">{{ description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

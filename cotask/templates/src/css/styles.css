@@ -1,0 +1,56 @@
+.flip-card-wrapper {
+  cursor: {% if onClick %}pointer{% else %}default{% endif %};
+  perspective: 1000px;
+  height: 200px;
+  width: 300px;
+}
+
+.flip-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card-wrapper:hover .flip-card {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.flip-card-back {
+  background-color: white;
+  transform: rotateY(180deg);
+}
+
+.card-logo {
+  max-height: 60px;
+  margin-bottom: 15px;
+}
+
+.card-title {
+  color: white;
+  text-align: center;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.card-description {
+  color: #333;
+  text-align: center;
+  margin: 0;
+}

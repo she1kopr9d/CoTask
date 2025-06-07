@@ -1,5 +1,283 @@
 {% extends 'components/base.html' %}
+{% load static %}
+
+{% load i18n %}
 
 {% block content %}
-<p>This is the stuff you want to be unique to the page. </p>
+
+{% if request.user.is_authenticated %}
+<!-- Контент для авторизованных пользователей -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 text-center mb-5">
+            <h1 class="mb-4 display-5 fw-bold text-dark">Привет, {{ request.user.username }}!</h1>
+            <p class="text-secondary mb-5 fs-5">Твоя площадка для победы над Сопротивлением</p>
+        </div>
+    </div>
+    
+    <div class="row g-4 justify-content-center">
+        
+    </div>
+</div>
+
+{% else %}
+<!-- Контент для неавторизованных пользователей -->
+
+<!-- Герой-секция -->
+<div class="py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center py-5">
+                <h1 class="mb-4 display-5 fw-bold text-dark">{% trans "Победи Сопротивление"%}</h1>
+                <p class="text-secondary mb-4 fs-5" style="max-width: 600px; margin: 0 auto;">
+                    {% trans "Инструмент для творцов, борющихся с внутренним врагом"%}
+                </p>
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <a href="{% url 'reg' %}" class="btn btn-primary px-5 py-3 fw-bold fs-5" style="background: #4361ee; border: none;">{% trans "Начать"%}</a>
+                    <a href="#features" class="btn btn-outline-dark px-5 py-3 fs-5">{% trans "Подробнее"%}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- О проекте -->
+<div id="about" class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mb-4 display-5 fw-bold text-dark">{% trans "О Сопротивлении"%}</h2>
+                <div class="py-3 mb-4 mx-auto" style="max-width: 700px; background: rgba(67, 97, 238, 0.1); border-radius: 16px;">
+                    <p class="fst-italic fs-5 px-4 text-dark">
+                        {% trans "Сопротивление - это внутренняя сила, мешающая нам творить и реализовывать потенциал"%}
+                    </p>
+                    <footer class="text-secondary mt-2">{% trans 'Стивен Прессфилд, "Война за искусство"'%}</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Возможности -->
+<div id="features" class="py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="container">
+        <h2 class="mb-4 text-center display-5 fw-bold text-dark">{% trans 'Возможности Co-Task'%}</h2>
+        <p class="text-center text-secondary mb-5 fs-5">{% trans 'Инструменты для творческой победы'%}</p>
+        {% include "components/flip_card.html" with color="#e74c3c" title="{% trans 'Конкретизатор'%}" description="{% trans 'Нейронная сеть помогает тебе сделать задачу конкретной, чтобы ее было легко решить по шагам.'%}" %}
+        {% include "components/flip_card.html" with color="#e74c3c" title="{% trans 'Карточки'%}" description="{% trans 'Карточки для запоминания информации.'%}" %}
+        {% include "components/flip_card.html" with color="#e74c3c" title="{% trans 'Социальная сеть'%}" description="{% trans 'Сеть для совместных задач. Вы сможете делиться своими результатами.'%}" %}
+        {% include "components/flip_card.html" with color="#e74c3c" title="{% trans 'Менеджер задач'%}" description="{% trans 'Совместно с конкретизатором он помогает следить за задачами, вы увидете распорядок дня.'%}" %}
+    </div>
+</div>
+
+<!-- Призыв к действию -->
+<div class="py-5 text-white" style="background: linear-gradient(135deg, #3a0ca3 0%, #7209b7 100%);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center py-4">
+                <h2 class="mb-4 display-5 fw-bold">{% trans 'Начни свою войну со Сопротивлением'%}</h2>
+                <p class="mb-4 fs-5">
+                    {% trans 'Присоединяйся к движению творческих людей'%}
+                </p>
+                <a href="{% url 'reg' %}" class="btn btn-light btn-lg px-5 py-3 fw-bold fs-5">{% trans 'Создать аккаунт'%}</a>
+                <p class="mt-3 small opacity-75">{% trans 'Первые 14 дней — полный доступ'%}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Базовые стили */
+    body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        background-color: #ffffff;
+        color: #212529;
+        line-height: 1.6;
+    }
+    
+    .text-dark {
+        color: #212529 !important;
+    }
+    
+    .text-secondary {
+        color: #6c757d !important;
+    }
+    
+    h1, h2, h3, h4, h5 {
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #212529;
+    }
+    
+    /* Стили для карточек */
+    .feature-card {
+        display: block;
+        height: 300px;
+        width: 100%;
+        margin-bottom: 1.5rem;
+        text-decoration: none !important;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        color: #212529 !important;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        background: white;
+        border: 1px solid #e9ecef;
+    }
+    
+    .card-content {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .card-icon {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-bottom: 25px;
+        background: rgba(0,0,0,0.03);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .feature-card .card-icon i {
+        font-size: 2.5rem;
+    }
+    
+    .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #212529;
+    }
+    
+    .feature-card p {
+        font-size: 1.1rem;
+        margin: 0;
+        line-height: 1.6;
+        color: #495057 !important;
+        max-width: 90%;
+    }
+    
+    /* Цвета для иконок */
+    .icon-blue i {
+        color: #4361ee;
+    }
+    
+    .icon-green i {
+        color: #06d6a0;
+    }
+    
+    .icon-purple i {
+        color: #7209b7;
+    }
+    
+    .icon-orange i {
+        color: #ff9e00;
+    }
+    
+    /* Эффекты при наведении */
+    .feature-card:hover {
+        box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        transform: translateY(-5px);
+        border-color: #dee2e6;
+    }
+    
+    .feature-card:hover .card-icon {
+        background: rgba(0,0,0,0.05);
+    }
+    
+    /* Иконки */
+    .bi {
+        display: block;
+    }
+    
+    /* Текст */
+    p {
+        font-size: 1.15rem;
+        color: #495057;
+    }
+    
+    .fs-5 {
+        font-size: 1.25rem !important;
+    }
+    
+    /* Заголовки */
+    .display-5 {
+        font-size: 3rem;
+    }
+    
+    /* Контейнеры */
+    .container {
+        max-width: 1200px;
+    }
+    
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        .display-5 {
+            font-size: 2.5rem;
+        }
+        
+        .feature-card {
+            height: 280px;
+            max-width: 300px;
+            margin: 0 auto 1.5rem;
+            padding: 25px;
+        }
+        
+        .feature-card p {
+            font-size: 1rem;
+        }
+        
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 20px;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .feature-card {
+            height: 250px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+{% if not request.user.is_authenticated %}
+<script>
+// Плавная прокрутка к якорям
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        if (this.getAttribute('href') === '#') return;
+        
+        e.preventDefault();
+        
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            window.scrollTo({
+                top: target.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+</script>
+{% endif %}
 {% endblock %}
