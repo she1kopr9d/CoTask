@@ -1,0 +1,73 @@
+{% extends "social_media/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-white">
+          <h1 class="h4 mb-0">Редактирование профиля</h1>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row mb-4">
+              <div class="col-md-4 text-center">
+                <div class="mb-3">
+                  <img id="avatar-preview" 
+                       src="https://via.placeholder.com/150" 
+                       class="img-fluid rounded-circle shadow" 
+                       width="150" 
+                       height="150" 
+                       alt="Аватар">
+                </div>
+                <div class="mb-3">
+                  <label for="avatar-input" class="btn btn-outline-primary w-100">
+                    <i class="bi bi-camera"></i> Выбрать фото
+                  </label>
+                  <input type="file" id="avatar-input" class="d-none" accept="image/*">
+                </div>
+              </div>
+              
+              <div class="col-md-8">
+                <div class="mb-3">
+                  <label class="form-label">Имя</label>
+                  <input type="text" class="form-control" value="Иван">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Фамилия</label>
+                  <input type="text" class="form-control" value="Иванов">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Username</label>
+                  <input type="text" class="form-control" value="ivan_ivanov">
+                </div>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">О себе</label>
+              <textarea class="form-control" rows="3">Продуктивность - это не про то, сколько ты успел, а про то, насколько значимым было то, что ты сделал.</textarea>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Веб-сайт</label>
+                <input type="url" class="form-control" placeholder="https://example.com">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Местоположение</label>
+                <input type="text" class="form-control" placeholder="Москва, Россия">
+              </div>
+            </div>
+            
+            <div class="d-flex justify-content-end mt-4">
+              <a href="profile.html" class="btn btn-secondary me-2">Отмена</a>
+              <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

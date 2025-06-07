@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-07 14:42+0000\n"
+"POT-Creation-Date: 2025-06-07 17:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,43 +26,52 @@ msgstr "Home"
 msgid "О нас"
 msgstr "About us"
 
-#: templates/components/header.html:51
-msgid "Select language"
-msgstr "Select language"
+#: templates/components/header.html:50
+msgid "Сменить язык"
+msgstr "Change language"
 
-#: templates/components/header.html:70
+#: templates/components/header.html:69
 msgid "Выйти"
 msgstr "Log out"
 
-#: templates/components/header.html:76
+#: templates/components/header.html:75
 msgid "Авторизация"
 msgstr "Login"
 
-#: templates/components/header.html:77
+#: templates/components/header.html:76
 msgid "Регистрация"
 msgstr "Sign in"
 
-#: templates/guest/main.html:31
+#: templates/guest/main.html:14
+#, python-format
+msgid "Добро пожаловать, %(username)s!"
+msgstr "Welcome, %(username)s!"
+
+#: templates/guest/main.html:16
+msgid "Твоя площадка для победы над Сопротивлением"
+msgstr "Your playground for defeating the Resistance"
+
+#: templates/guest/main.html:33
 msgid "Победи Сопротивление"
 msgstr "Defeat the resistance"
 
-#: templates/guest/main.html:33
+#: templates/guest/main.html:35
 msgid "Инструмент для творцов, борющихся с внутренним врагом"
 msgstr "A tool for creators fighting the enemy within"
 
-#: templates/guest/main.html:36
+#: templates/guest/main.html:38
 msgid "Начать"
 msgstr "Start"
 
-#: templates/guest/main.html:37
+#: templates/guest/main.html:39
 msgid "Подробнее"
 msgstr "More"
 
-#: templates/guest/main.html:49
+#: templates/guest/main.html:51
 msgid "О Сопротивлении"
 msgstr "About resistance"
 
-#: templates/guest/main.html:52
+#: templates/guest/main.html:54
 msgid ""
 "Сопротивление - это внутренняя сила, мешающая нам творить и реализовывать "
 "потенциал"
@@ -70,19 +79,35 @@ msgstr ""
 "Resistance is an internal force that prevents us from creating and realizing "
 "our potential"
 
-#: templates/guest/main.html:54
+#: templates/guest/main.html:56
 msgid "Стивен Прессфилд, \"Война за искусство\""
 msgstr "Steven Pressfield, \"The War of Art\""
 
-#: templates/guest/main.html:64
+#: templates/guest/main.html:66
 msgid "Возможности Co-Task"
 msgstr "Co-Task Features"
 
-#: templates/guest/main.html:65
+#: templates/guest/main.html:67
 msgid "Инструменты для творческой победы"
 msgstr "A tool for creators fighting the enemy within"
 
-#: templates/guest/main.html:66
+#: templates/guest/main.html:69
+msgid "Конкретизатор"
+msgstr "Specifier"
+
+#: templates/guest/main.html:70
+msgid "Карточки"
+msgstr "Mind cards"
+
+#: templates/guest/main.html:71
+msgid "Социальная сеть"
+msgstr "Social media"
+
+#: templates/guest/main.html:72
+msgid "Менеджер задач"
+msgstr "Task Manager"
+
+#: templates/guest/main.html:74
 msgid ""
 "Нейронная сеть помогает тебе сделать задачу конкретной, чтобы ее было легко "
 "решить по шагам."
@@ -90,35 +115,35 @@ msgstr ""
 "The neural network helps you make the task concrete so that it can be easily "
 "solved step by step."
 
-#: templates/guest/main.html:67
+#: templates/guest/main.html:75
 msgid "Карточки для запоминания информации."
 msgstr "Flashcards for memorizing information."
 
-#: templates/guest/main.html:68
+#: templates/guest/main.html:76
 msgid "Сеть для совместных задач. Вы сможете делиться своими результатами."
 msgstr "Network for collaborative tasks. You will be able to share your results."
 
-#: templates/guest/main.html:69
+#: templates/guest/main.html:77
 msgid ""
 "Совместно с конкретизатором он помогает следить за задачами, вы увидете "
 "распорядок дня."
 msgstr ""
-"Together with the concretizer, it helps to keep track of tasks, you will see the "
-"daily schedule."
+"Together with the concretizer, it helps to keep track of tasks, you will see "
+"the daily schedule."
 
-#: templates/guest/main.html:78
+#: templates/guest/main.html:95
 msgid "Начни свою войну со Сопротивлением"
 msgstr "Defeat the resistance"
 
-#: templates/guest/main.html:80
+#: templates/guest/main.html:97
 msgid "Присоединяйся к движению творческих людей"
 msgstr "Join the creative movement"
 
-#: templates/guest/main.html:82
+#: templates/guest/main.html:99
 msgid "Создать аккаунт"
 msgstr "Create account"
 
-#: templates/guest/main.html:83
+#: templates/guest/main.html:100
 msgid "Первые 14 дней — полный доступ"
 msgstr "First 14 days - full access"
 
@@ -197,3 +222,6 @@ msgstr "Already have an account?"
 #: templates/user/reg.html:74
 msgid "Войдите"
 msgstr "Enter"
+
+#~ msgid "Select language"
+#~ msgstr "Select language"

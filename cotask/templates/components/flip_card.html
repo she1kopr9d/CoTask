@@ -1,7 +1,7 @@
-
 {% load static %}
 
-<div class="flip-card-wrapper" {% if onClick %}onclick="{{ onClick }}"{% endif %}>
+<div class="flip-card-wrapper" 
+     {% if onClick %}onclick="{{ onClick }}"{% endif %}>
   <div class="flip-card">
     <!-- Лицевая сторона -->
     <div class="flip-card-front" style="background-color: {{ color|default:'#3498db' }}">

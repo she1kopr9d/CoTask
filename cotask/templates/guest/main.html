@@ -10,8 +10,10 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-10 text-center mb-5">
-            <h1 class="mb-4 display-5 fw-bold text-dark">Привет, {{ request.user.username }}!</h1>
-            <p class="text-secondary mb-5 fs-5">Твоя площадка для победы над Сопротивлением</p>
+            <h1 class="mb-4 display-5 fw-bold text-dark">
+            {% blocktrans with username=request.user.username %}Добро пожаловать, {{ username }}!{% endblocktrans %}
+            </h1>
+            <p class="text-secondary mb-5 fs-5">{% trans "Твоя площадка для победы над Сопротивлением" %}</p>
         </div>
     </div>
     
@@ -63,10 +65,25 @@
     <div class="container">
         <h2 class="mb-4 text-center display-5 fw-bold text-dark">{% trans 'Возможности Co-Task'%}</h2>
         <p class="text-center text-secondary mb-5 fs-5">{% trans 'Инструменты для творческой победы'%}</p>
-        {% include "components/flip_card.html" with color="#e74c3c" title="{% trans 'Конкретизатор'%}" description="{% trans 'Нейронная сеть помогает тебе сделать задачу конкретной, чтобы ее было легко решить по шагам.'%}" %}
-        {% include "components/flip_card.html" with color="#e74c3c" title="{% trans 'Карточки'%}" description="{% trans 'Карточки для запоминания информации.'%}" %}
-        {% include "components/flip_card.html" with color="#e74c3c" title="{% trans 'Социальная сеть'%}" description="{% trans 'Сеть для совместных задач. Вы сможете делиться своими результатами.'%}" %}
-        {% include "components/flip_card.html" with color="#e74c3c" title="{% trans 'Менеджер задач'%}" description="{% trans 'Совместно с конкретизатором он помогает следить за задачами, вы увидете распорядок дня.'%}" %}
+
+        {% trans 'Конкретизатор' as konk_title %}
+        {% trans 'Карточки' as cards_title %}
+        {% trans 'Социальная сеть' as social_media_title %}
+        {% trans 'Менеджер задач' as task_manager_title %}
+
+        {% trans 'Нейронная сеть помогает тебе сделать задачу конкретной, чтобы ее было легко решить по шагам.' as konk_info %}
+        {% trans 'Карточки для запоминания информации.' as cards_info %}
+        {% trans 'Сеть для совместных задач. Вы сможете делиться своими результатами.' as social_media_info %}
+        {% trans 'Совместно с конкретизатором он помогает следить за задачами, вы увидете распорядок дня.' as task_manager_info %}
+
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+                {% include "components/flip_card.html" with color="#2196f3" title=konk_title description=konk_info %}
+                {% include "components/flip_card.html" with color="#4caf50" title=cards_title description=cards_info %}
+                {% include "components/flip_card.html" with color="#ff5252" title=social_media_title description=social_media_info %}
+                {% include "components/flip_card.html" with color="#ffd740" title=task_manager_title description=task_manager_info %}
+            </div>
+        </div>
     </div>
 </div>
 

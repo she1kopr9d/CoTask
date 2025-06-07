@@ -17,29 +17,17 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">{% trans "Главная" %}</a>
+                        <a class="nav-link active" aria-current="page" href="{% url "guest" %}">{% trans "Главная" %}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">{% trans "О нас" %}</a>
                     </li>
-                    {% comment %} <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            Услуги
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Веб-разработка</a></li>
-                            <li><a class="dropdown-item" href="#">Дизайн</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Консультации</a></li>
-                        </ul>
-                    </li> {% endcomment %}
                 </ul>
                 
 
                 <div class="dropdown">
                     <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <img src="{% static 'flags/' %}{{ request.LANGUAGE_CODE }}.svg" width="20" class="me-2">
-                        <i class="bi bi-globe"></i>
+                        <img src="{% static 'flags/' %}{{ request.LANGUAGE_CODE }}.svg" width="20" class="me-2"/>
                     </button>
                     
                     <form action="{% url 'set_language' %}" method="post" class="dropdown-menu">
@@ -47,7 +35,7 @@
                         
                         <input name="next" type="hidden" value="{{ request.get_full_path }}">
                         
-                        <h6 class="dropdown-header">{% trans "Select language" %}</h6>
+                        <h6 class="dropdown-header">{% trans "Сменить язык" %}</h6>
                         {% get_available_languages as LANGUAGES %}
                         {% for code, name in LANGUAGES %}
                             <button type="submit" name="language" value="{{ code }}" 
@@ -60,7 +48,6 @@
                 </div>
                 <!-- Поиск и кнопки -->
                 {% if request.user.is_authenticated %}
-                    {% comment %} <a href="{% url "profile_detail" request.user.profile.slug %}" type="button" class="btn btn-secondary me-2"> {{ request.user.username }}</a> {% endcomment %} 
                     <div class="ms-2">
                         <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}

@@ -1,0 +1,235 @@
+{% extends "social_media/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-lg-8">
+      <!-- Форма создания поста -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="d-flex">
+            <img src="https://via.placeholder.com/50" 
+                 class="rounded-circle me-3" 
+                 width="50" 
+                 height="50" 
+                 alt="Аватар">
+            <button class="btn btn-outline-secondary w-100 text-start"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#createPostModal">
+              Что у вас нового?
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Список постов -->
+      <div class="card mb-4">
+        <div class="card-header bg-white d-flex align-items-center">
+          <img src="https://via.placeholder.com/40" 
+               class="rounded-circle me-2" 
+               width="40" 
+               height="40" 
+               alt="Аватар">
+          <div>
+            <a href="profile.html" class="text-decoration-none fw-bold text-dark">
+              Алексей Петров
+            </a>
+            <div class="text-muted small">
+              2 часа назад
+            </div>
+          </div>
+        </div>
+        
+        <div class="card-body">
+          <p class="card-text">Сегодня завершил важный проект! 🎉 Чувствую огромное удовлетворение от проделанной работы. Особенно горжусь тем, что уложился в сроки несмотря на все сложности.</p>
+          <img src="https://via.placeholder.com/600x400" 
+               class="img-fluid rounded mb-3" 
+               alt="Изображение поста">
+        </div>
+        
+        <div class="card-footer bg-white">
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-sm btn-outline-secondary like-button">
+              <i class="bi bi-heart"></i> <span class="like-count">12</span>
+            </button>
+            <button class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-chat"></i> Комментировать
+            </button>
+            <button class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-share"></i> Поделиться
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card mb-4">
+        <div class="card-header bg-white d-flex align-items-center">
+          <img src="https://via.placeholder.com/40" 
+               class="rounded-circle me-2" 
+               width="40" 
+               height="40" 
+               alt="Аватар">
+          <div>
+            <a href="profile.html" class="text-decoration-none fw-bold text-dark">
+              Мария Иванова
+            </a>
+            <div class="text-muted small">
+              5 часов назад
+            </div>
+          </div>
+        </div>
+        
+        <div class="card-body">
+          <p class="card-text">Делимся нашим новым достижением: команда завершила квартальный план на 2 недели раньше срока! Особенно хочу отметить вклад @АлексейПетров и @СергейСидоров. Отличная работа, коллеги! 👏</p>
+        </div>
+        
+        <div class="card-footer bg-white">
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-sm btn-outline-secondary like-button">
+              <i class="bi bi-heart"></i> <span class="like-count">28</span>
+            </button>
+            <button class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-chat"></i> Комментировать
+            </button>
+            <button class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-share"></i> Поделиться
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Флип-карточки -->
+      <h4 class="mt-5 mb-3">Инструменты продуктивности</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="flip-card-wrapper">
+            <div class="flip-card">
+              <div class="flip-card-front" style="background-color: #4e73df;">
+                <h3 class="card-title text-white">Тайм-менеджмент</h3>
+              </div>
+              <div class="flip-card-back">
+                <p class="card-description">Эффективные методы управления временем, включая технику Помодоро и матрицу Эйзенхауэра</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="flip-card-wrapper">
+            <div class="flip-card">
+              <div class="flip-card-front" style="background-color: #1cc88a;">
+                <h3 class="card-title text-white">Целеполагание</h3>
+              </div>
+              <div class="flip-card-back">
+                <p class="card-description">Система постановки SMART-целей и их достижения с помощью поэтапного планирования</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-4">
+      <!-- Рекомендации -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">Рекомендации</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex align-items-center">
+              <img src="https://via.placeholder.com/40" 
+                   class="rounded-circle me-3" 
+                   width="40" 
+                   height="40" 
+                   alt="Аватар">
+              <div class="flex-grow-1">
+                <a href="profile.html" 
+                   class="text-decoration-none fw-bold text-dark">
+                  Анна Кузнецова
+                </a>
+                <div class="text-muted small">
+                  @annak
+                </div>
+              </div>
+              <button class="btn btn-sm btn-outline-primary follow-button">
+                Подписаться
+              </button>
+            </li>
+            <li class="list-group-item d-flex align-items-center">
+              <img src="https://via.placeholder.com/40" 
+                   class="rounded-circle me-3" 
+                   width="40" 
+                   height="40" 
+                   alt="Аватар">
+              <div class="flex-grow-1">
+                <a href="profile.html" 
+                   class="text-decoration-none fw-bold text-dark">
+                  Дмитрий Волков
+                </a>
+                <div class="text-muted small">
+                  @dmitryv
+                </div>
+              </div>
+              <button class="btn btn-sm btn-outline-primary follow-button">
+                Подписаться
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Статистика -->
+      <div class="card shadow-sm">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">Ваша активность</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-grid gap-3">
+            <div class="d-flex justify-content-between">
+              <span>Постов за неделю:</span>
+              <strong>5</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Подписчиков:</span>
+              <strong>42</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Подписок:</span>
+              <strong>18</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Продуктивность:</span>
+              <strong>87%</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно для создания поста -->
+<div class="modal fade" id="createPostModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Создать пост</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <textarea class="form-control" rows="4" placeholder="Что у вас нового?"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Добавить изображение (необязательно)</label>
+          <input type="file" class="form-control" accept="image/*">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-primary">Опубликовать</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

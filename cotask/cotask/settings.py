@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "user",
     "guest",
+    "social_media",
 ]
 
 MIDDLEWARE = [
@@ -157,4 +158,5 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
 
-LOGOUT_REDIRECT_URL = '/'
+
+LOGIN_REDIRECT_URL = 'feed'
