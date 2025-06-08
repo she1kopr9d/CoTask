@@ -177,3 +177,35 @@ body {
 .fade-in {
   animation: fadeIn 0.5s ease-in;
 }
+
+.dropdown-toggle::after {
+    display:none;
+}
+
+/* Базовые стили для контейнера аватарки */
+.avatar-container {
+    display: inline-block;
+    border-radius: 50%;
+}
+
+/* Анимация при наведении */
+.profile-avatar {
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+}
+.avatar-container:hover .profile-avatar {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Эффект при фокусе для доступности */
+.btn:focus-visible .profile-avatar {
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
+}
+
+/* Универсальный класс для круглых изображений */
+.object-fit-cover {
+    object-fit: cover;
+    object-position: center;
+}

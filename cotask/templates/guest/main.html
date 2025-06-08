@@ -5,27 +5,6 @@
 
 {% block content %}
 
-{% if request.user.is_authenticated %}
-<!-- Контент для авторизованных пользователей -->
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-10 text-center mb-5">
-            <h1 class="mb-4 display-5 fw-bold text-dark">
-            {% blocktrans with username=request.user.username %}Добро пожаловать, {{ username }}!{% endblocktrans %}
-            </h1>
-            <p class="text-secondary mb-5 fs-5">{% trans "Твоя площадка для победы над Сопротивлением" %}</p>
-        </div>
-    </div>
-    
-    <div class="row g-4 justify-content-center">
-        
-    </div>
-</div>
-
-{% else %}
-<!-- Контент для неавторизованных пользователей -->
-
-<!-- Герой-секция -->
 <div class="py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
     <div class="container">
         <div class="row justify-content-center">
@@ -102,8 +81,6 @@
         </div>
     </div>
 </div>
-
-{% endif %}
 
 {% endblock %}
 

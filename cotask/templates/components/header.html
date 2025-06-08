@@ -1,7 +1,7 @@
 {% load static %}
 {% load i18n %}
 <header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary height: auto;">
         <div class="container-fluid container">
             <!-- Логотип -->
             <a class="navbar-brand" href="{% url "guest" %}">
@@ -23,44 +23,97 @@
                         <a class="nav-link" href="#">{% trans "О нас" %}</a>
                     </li>
                 </ul>
-                
-
-                <div class="dropdown">
-                    <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <img src="{% static 'flags/' %}{{ request.LANGUAGE_CODE }}.svg" width="20" class="me-2"/>
-                    </button>
-                    
-                    <form action="{% url 'set_language' %}" method="post" class="dropdown-menu">
-                        {% csrf_token %}
+                <div class="text-end">
+                    {% comment %} <div class="dropdown" type="button" class="btn btn-light text-dark me-2">
                         
-                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                    </div> {% endcomment %}
+                    <a class="btn btn-light text-dark me-2 dropdown">
+                        <img class="dropdown-toggle" type="button" data-bs-toggle="dropdown" src="{% static 'flags/' %}{{ request.LANGUAGE_CODE }}.svg" width="20" class="me-2"/>
                         
-                        <h6 class="dropdown-header">{% trans "Сменить язык" %}</h6>
-                        {% get_available_languages as LANGUAGES %}
-                        {% for code, name in LANGUAGES %}
-                            <button type="submit" name="language" value="{{ code }}" 
-                                    class="dropdown-item {% if code == request.LANGUAGE_CODE %}active{% endif %}">
-                                <img src="{% static 'flags/' %}{{ code }}.svg" width="20" class="me-2">
-                                {{ name }}
-                            </button>
-                        {% endfor %}
-                    </form>
-                </div>
-                <!-- Поиск и кнопки -->
-                {% if request.user.is_authenticated %}
-                    <div class="ms-2">
-                        <form method="post" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                            <i class="bi bi-box-arrow-right"></i> {% trans "Выйти" %}
-                        </button>
+                        <form action="{% url 'set_language' %}" method="post" class="dropdown-menu">
+                            {% csrf_token %}
+                            
+                            <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                            
+                            <h6 class="dropdown-header">{% trans "Сменить язык" %}</h6>
+                            {% get_available_languages as LANGUAGES %}
+                            {% for code, name in LANGUAGES %}
+                                <button type="submit" name="language" value="{{ code }}" 
+                                        class="dropdown-item {% if code == request.LANGUAGE_CODE %}active{% endif %}">
+                                    <img src="{% static 'flags/' %}{{ code }}.svg" width="20" class="me-2">
+                                    {{ name }}
+                                </button>
+                            {% endfor %}
                         </form>
-                    </div>
-                {% else %}
-                    <div class="text-end">
-                        <a href="{% url "login" %}" type="button" class="btn btn-light text-dark me-2">{% trans "Авторизация" %}</a>
-                        <a href="{% url "reg" %}" type="button" class="btn btn-primary">{% trans "Регистрация" %}</a>
-                    </div>
+                    </a>
+                    {% if not request.user.is_authenticated %}
+                    <a href="{% url "login" %}" type="button" class="btn btn-light text-dark me-2">{% trans "Авторизация" %}</a>
+                    <a href="{% url "reg" %}" type="button" class="btn btn-primary">{% trans "Регистрация" %}</a>
+                    {% endif %}
+                </div>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <!-- Кнопка-триггер меню в виде аватарки -->
+                        <button 
+                            class="btn p-0 border-0 bg-transparent dropdown-toggle" 
+                            type="button" 
+                            id="avatarDropdown" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false"
+                        >
+                            <a class="dropdown-item d-flex align-items-center">
+                                <img 
+                                    src="https://via.placeholder.com/40" 
+                                    class="me-2 rounded-circle" 
+                                    width="40" 
+                                    height="40"
+                                    alt="Аватар"
+                                >
+                            </a>
+                        </button>
+                    
+                        <!-- Выпадающее меню -->
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="avatarDropdown">
+                        <!-- Профиль пользователя -->
+                            <li>
+                                <a href="{% url 'profile' request.user.username %}" class="dropdown-item d-flex align-items-center">
+                                    <img 
+                                        src="https://via.placeholder.com/40" 
+                                        class="me-2 rounded-circle" 
+                                        width="40" 
+                                        height="40"
+                                        alt="Аватар"
+                                    >
+                                    <div>
+                                        <strong>{{ request.user.get_full_name }}</strong>
+                                        <div class="text-muted small">@{{ request.user.username }}</div>
+                                    </div>
+                                </a>
+                            </li>
+                        
+                            <!-- Администрирование (для staff) -->
+                            {% if request.user.is_staff %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a href="{% url 'admin:index' %}" class="dropdown-item">
+                                        <i class="bi bi-gear me-2"></i> {% trans "Администрирование" %}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        
+                        <!-- Выход -->
+                        
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="post" action="{% url 'logout' %}" class="px-3 py-1">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger w-100">
+                                        <i class="bi bi-box-arrow-right me-1"></i> {% trans "Выйти" %}
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
                 {% endif %}
             </div>
         </div>
