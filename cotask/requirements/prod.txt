@@ -4,3 +4,4 @@ python-dotenv==1.1.0
 djangorestframework==3.16.0
 django-modeltranslation==0.19.15
 Pillow==11.2.1
+gunicorn

@@ -1,0 +1,211 @@
+.flip-card-wrapper {
+  cursor: {% if onClick %}pointer{% else %}default{% endif %};
+  perspective: 1000px;
+  height: 200px;
+  width: 300px;
+}
+
+.flip-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card-wrapper:hover .flip-card {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.flip-card-back {
+  background-color: white;
+  transform: rotateY(180deg);
+}
+
+.card-logo {
+  max-height: 60px;
+  margin-bottom: 15px;
+}
+
+.card-title {
+  color: white;
+  text-align: center;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.card-description {
+  color: #333;
+  text-align: center;
+  margin: 0;
+}
+
+.flip-card-wrapper:active {
+  filter: brightness(0.95);
+}
+
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 3px solid white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.stats-card {
+  min-width: 80px;
+  transition: transform 0.3s;
+}
+
+.stats-card:hover {
+  transform: translateY(-3px);
+}
+
+.progress-section {
+  border-left: 3px solid #4e73df;
+}
+
+.task-list .list-group-item {
+  padding: 1.25rem;
+  border-left: none;
+  border-right: none;
+  transition: background-color 0.2s;
+}
+
+.task-list .list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.task-list .form-check-input:checked {
+  background-color: #1cc88a;
+  border-color: #1cc88a;
+}
+
+.activity-feed li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.activity-feed li:last-child {
+  border-bottom: none;
+}
+
+.achievement {
+  flex: 0 0 calc(33.333% - 10px);
+}
+
+.achievement-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:root {
+  --primary: #4e73df;
+  --secondary: #6c757d;
+  --success: #1cc88a;
+  --info: #36b9cc;
+  --warning: #f6c23e;
+  --danger: #e74a3b;
+  --light: #f8f9fc;
+  --dark: #5a5c69;
+}
+
+body {
+  background-color: #f8f9fc;
+  padding-top: 56px;
+}
+
+.card {
+  border: none;
+  border-radius: 0.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.avatar-preview {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.footer {
+  background-color: #f8f9fc;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.dropdown-toggle::after {
+    display:none;
+}
+
+/* Базовые стили для контейнера аватарки */
+.avatar-container {
+    display: inline-block;
+    border-radius: 50%;
+}
+
+/* Анимация при наведении */
+.profile-avatar {
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+}
+.avatar-container:hover .profile-avatar {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Эффект при фокусе для доступности */
+.btn:focus-visible .profile-avatar {
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
+}
+
+/* Универсальный класс для круглых изображений */
+.object-fit-cover {
+    object-fit: cover;
+    object-position: center;
+}

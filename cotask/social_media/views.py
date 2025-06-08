@@ -1,6 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest
+
+from django.contrib.auth.models import User
+
+import social_media.logic.following
 
 
 @login_required
@@ -20,6 +24,30 @@ def discover_view(request: HttpRequest):
 
 @login_required
 def profile_view(request: HttpRequest, username):
-    if request.user.username == username:
-        return render(request, 'social_media/self_profile.html')
-    return render(request, 'social_media/profile.html')
+    another_user = User.objects.filter(username=username).first()
+
+    return render(
+        request,
+        'social_media/profile.html',
+        {
+            "another_user": another_user,
+            "is_following": social_media.logic.following.is_followed(
+                request.user,
+                another_user,
+            ),
+        },
+    )
+
+
+@login_required
+def follow_view(request: HttpRequest, username):
+    another_user = User.objects.filter(username=username).first()
+    social_media.logic.following.follow(request.user, another_user)
+    return redirect("profile", username)
+
+
+@login_required
+def unfollow_view(request: HttpRequest, username):
+    another_user = User.objects.filter(username=username).first()
+    social_media.logic.following.unfollow(request.user, another_user)
+    return redirect("profile", username)

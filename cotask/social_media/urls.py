@@ -8,4 +8,6 @@ urlpatterns = [
     path('profile/<str:username>/', social_media.views.profile_view, name='profile'),
     path('discover/', social_media.views.discover_view, name='discover'),
     path('edit-profile/', social_media.views.edit_profile, name='edit_profile'),
+    path('follow/<str:username>/', social_media.views.follow_view, name='follow'),
+    path('unfollow/<str:username>/', social_media.views.unfollow_view, name='unfollow'),
 ]

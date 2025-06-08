@@ -1,6 +1,18 @@
 FROM python:3.12
-WORKDIR /usr/src/app
+WORKDIR /app
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN apt-get update && apt-get install -y \
+    gcc \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY requirements/prod.txt .
-RUN pip install -r prod.txt
+RUN pip install --no-cache-dir -r prod.txt
+
 COPY . .
-RUN chmod -R 777 ./
+
+# Сборка статических файлов
+CMD ["./start.sh"]
