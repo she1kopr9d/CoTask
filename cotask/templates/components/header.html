@@ -24,9 +24,6 @@
                     </li>
                 </ul>
                 <div class="text-end">
-                    {% comment %} <div class="dropdown" type="button" class="btn btn-light text-dark me-2">
-                        
-                    </div> {% endcomment %}
                     <a class="btn btn-light text-dark me-2 dropdown">
                         <img class="dropdown-toggle" type="button" data-bs-toggle="dropdown" src="{% static 'flags/' %}{{ request.LANGUAGE_CODE }}.svg" width="20" class="me-2"/>
                         
@@ -62,8 +59,8 @@
                             aria-expanded="false"
                         >
                             <a class="dropdown-item d-flex align-items-center">
-                                <img 
-                                    src="https://via.placeholder.com/40" 
+                                <img
+                                    src="{{ request.user.profile.avatar.url }}" 
                                     class="me-2 rounded-circle" 
                                     width="40" 
                                     height="40"
@@ -78,7 +75,7 @@
                             <li>
                                 <a href="{% url 'profile' request.user.username %}" class="dropdown-item d-flex align-items-center">
                                     <img 
-                                        src="https://via.placeholder.com/40" 
+                                        src="{{ request.user.profile.avatar.url }}" 
                                         class="me-2 rounded-circle" 
                                         width="40" 
                                         height="40"
