@@ -1,0 +1,15 @@
+{% load static %}
+
+<a href="{% url 'profile' friend.username %}" class="dropdown-item d-flex align-items-center">
+    <img 
+        src="{{ friend.profile.avatar.url }}" 
+        class="me-2 rounded-circle" 
+        width="40" 
+        height="40"
+        alt="Аватар"
+    >
+    <div>
+        <strong>{{ friend.get_full_name }}</strong>
+        <div class="text-muted small">@{{ friend.username }}</div>
+    </div>
+</a>

@@ -72,96 +72,27 @@
           </div>
         </div>
       </div>
-    </div>
-  </div> {% endcomment %}
-
-  <!-- Лента постов пользователя -->
-  {% comment %} <div class="row">
-    <div class="col-12">
-      <div class="card shadow-sm mb-4">
-        <div class="card-header bg-white">
-          <h5 class="mb-0">Посты пользователя</h5>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6 mb-4">
-              <div class="card h-100">
-                <div class="card-header bg-white d-flex align-items-center">
-                  <img src="https://via.placeholder.com/40" 
-                       class="rounded-circle me-2" 
-                       width="40" 
-                       height="40" 
-                       alt="Аватар">
-                  <div>
-                    <a href="profile.html" 
-                       class="text-decoration-none fw-bold text-dark">
-                      Иван Иванов
-                    </a>
-                    <div class="text-muted small">
-                      1 день назад
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="card-body">
-                  <p class="card-text">Сегодня начал новую практику - утренние страницы. Пишу 3 страницы рукописного текста сразу после пробуждения. Уже чувствую, как это очищает разум и фокусирует на важном.</p>
-                </div>
-                
-                <div class="card-footer bg-white">
-                  <div class="d-flex justify-content-between">
-                    <button class="btn btn-sm btn-outline-secondary like-button">
-                      <i class="bi bi-heart"></i> <span class="like-count">18</span>
-                    </button>
-                    <button class="btn btn-sm btn-outline-secondary">
-                      <i class="bi bi-chat"></i> Комментировать
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-md-6 mb-4">
-              <div class="card h-100">
-                <div class="card-header bg-white d-flex align-items-center">
-                  <img src="https://via.placeholder.com/40" 
-                       class="rounded-circle me-2" 
-                       width="40" 
-                       height="40" 
-                       alt="Аватар">
-                  <div>
-                    <a href="profile.html" 
-                       class="text-decoration-none fw-bold text-dark">
-                      Иван Иванов
-                    </a>
-                    <div class="text-muted small">
-                      3 дня назад
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="card-body">
-                  <p class="card-text">Завершил 30-дневный челлендж по изучению Python! 🐍 Результат: создал 5 проектов, решил 120 задач на Codewars. Главный вывод: регулярность важнее интенсивности.</p>
-                  <img src="https://via.placeholder.com/600x300" 
-                       class="img-fluid rounded mb-3" 
-                       alt="Изображение поста">
-                </div>
-                
-                <div class="card-footer bg-white">
-                  <div class="d-flex justify-content-between">
-                    <button class="btn btn-sm btn-outline-secondary like-button">
-                      <i class="bi bi-heart"></i> <span class="like-count">42</span>
-                    </button>
-                    <button class="btn btn-sm btn-outline-secondary">
-                      <i class="bi bi-chat"></i> Комментировать
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> {% endcomment %}
+    </div>{% endcomment %}
+  </div>
 </div>
+<div class="profile-header row gx-5">
+  <div class="col-8">
+    <div class="bg-light p-4 rounded-3 shadow-sm" ></div>
+  </div>
+  <div class="col-4 ps-0">
+    <div class="bg-light p-4 rounded-3 shadow-sm" >
+      <p>{% trans "Подписки" %}</p>
+      {% for following in followings %}
+        {% include "components/friend_card.html" with friend=following %}
+      {% endfor %}
+    </div>
+    <div class="bg-light p-4 mt-4 rounded-3 shadow-sm" >
+      <p>{% trans "Подписчики" %}</p>
+      {% for follower in followers %}
+        {% include "components/friend_card.html" with friend=follower %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
 {% endblock %}

@@ -6,7 +6,8 @@ services:
   site:
     build: ./cotask
     container_name: site
-    command: ./start.sh  # Используем Gunicorn
+    #command: ./start.sh  # Используем Gunicorn
+    command: python manage.py runserver 0.0.0.0:8000
     depends_on:
       - db
     env_file:
@@ -16,9 +17,12 @@ services:
     networks:
       - net
     volumes:
+      - ./cotask/media/avatars:/app/media/avatars
       - ./cotask:/app
       - static:/app/static  # Том для статических файлов
-      - media:/app/media    # Том для медиафайлов
+      #- media:/app/media    # Том для медиафайлов
+    ports:
+      - "80:8000"
 
   db:
     image: postgres:15
@@ -32,19 +36,19 @@ services:
     networks:
       - net
 
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf  # Монтируем в основной конфиг
-      - static:/app/static
-      - media:/app/media
-    depends_on:
-      - site
-    networks:
-      - net
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: nginx
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf  # Монтируем в основной конфиг
+  #     - static:/app/static
+  #     - media:/app/media
+  #   depends_on:
+  #     - site
+  #   networks:
+  #     - net
 
 volumes:
   postgres_data:

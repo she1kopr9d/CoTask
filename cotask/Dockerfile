@@ -11,7 +11,6 @@ RUN apt-get update && apt-get install -y \
 
 COPY requirements/prod.txt .
 RUN pip install --no-cache-dir -r prod.txt
-
 COPY . .
 
 # Сборка статических файлов

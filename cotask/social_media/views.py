@@ -25,7 +25,8 @@ def discover_view(request: HttpRequest):
 @login_required
 def profile_view(request: HttpRequest, username):
     another_user = User.objects.filter(username=username).first()
-
+    followers = social_media.logic.following.get_all_follower(another_user)
+    followings = social_media.logic.following.get_all_following(another_user)
     return render(
         request,
         'social_media/profile.html',
@@ -35,6 +36,8 @@ def profile_view(request: HttpRequest, username):
                 request.user,
                 another_user,
             ),
+            "followers": followers,
+            "followings": followings,
         },
     )
 

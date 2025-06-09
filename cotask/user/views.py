@@ -2,12 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from user.forms import SignUpForm, LoginForm
 
+from user.logic.profile import create_profile
+
 
 def signup_view(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            create_profile(user)
             login(request, user)
             return redirect('guest')
     else:
