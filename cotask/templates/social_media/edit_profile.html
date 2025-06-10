@@ -9,44 +9,78 @@
           <h1 class="h4 mb-0">Редактирование профиля</h1>
         </div>
         <div class="card-body">
-          <form>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+              <div class="errors">
+                {{ form.non_field_errors }}
+              </div>
+            {% endif %}
             <div class="row mb-4">
+            <!-- Поля User -->
+            <!-- Обработка общих ошибок -->
+            
               <div class="col-md-4 text-center">
                 <div class="mb-3">
-                  <img id="avatar-preview" 
+                  {% if request.user.profile.avatar %}
+                  <div class="max-width:150px; max-height:150px;">
+                    <img id="avatar-preview" 
                        src="{{ request.user.profile.avatar.url }}" 
-                       class="img-fluid rounded-circle shadow" 
-                       width="150" 
-                       height="150" 
+                       class="img-fluid rounded-circle shadow"
                        alt="Аватар">
+                  </div>
+                  {% endif %}
                 </div>
                 <div class="mb-3">
-                  <label for="avatar-input" class="btn btn-outline-primary w-100">
-                    <i class="bi bi-camera"></i> Выбрать фото
-                  </label>
-                  <input type="file" id="avatar-input" class="d-none" accept="image/*">
+                  <input for="avatar-input" class="btn btn-outline-primary w-100"
+                    id="avatar"
+                    type="file"
+                    name="avatar"
+                    accept="image/*">
+                  </input>
                 </div>
               </div>
-              
               <div class="col-md-8">
                 <div class="mb-3">
                   <label class="form-label">Имя</label>
-                  <input type="text" class="form-control" value="{{ request.user.first_name }}">
+                  <input type="text"
+                    class="form-control"
+                    id="first_name"
+                    name="first_name"
+                    value="{{ form.first_name.value|default:'' }}"
+                    placeholder="Ваше имя">
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Фамилия</label>
-                  <input type="text" class="form-control" value="{{ request.user.last_name }}">
+                  <input type="text"
+                    class="form-control"
+                    id="last_name"
+                    name="last_name"
+                    value="{{ form.last_name.value|default:'' }}"
+                    placeholder="Ваша фамилия">
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Username</label>
-                  <input type="text" class="form-control" value="{{ request.user.username }}">
+                    <input type="text" 
+                          id="username"
+                          name="username"
+                          value="{{ form.username.value|default:'' }}"
+                          class="form-control {% if form.username.errors %}error-field{% endif %}"
+                          placeholder="Введите логин">
+                    {% for error in form.username.errors %}
+                      <div class="error">{{ error }}</div>
+                    {% endfor %}
                 </div>
               </div>
             </div>
             
             <div class="mb-3">
               <label class="form-label">О себе</label>
-              <textarea class="form-control" rows="3">{{ request.user.profile.about }}</textarea>
+              <textarea id="about"
+                        name="about"
+                        class="form-control"
+                        rows="3"
+                        placeholder="Расскажите о себе...">{{ form.about.value|default:'' }}</textarea>
             </div>
             
             <div class="d-flex justify-content-end mt-4">

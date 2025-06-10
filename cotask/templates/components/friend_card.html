@@ -1,6 +1,6 @@
 {% load static %}
 
-<a href="{% url 'profile' friend.username %}" class="dropdown-item d-flex align-items-center">
+<a href="{% url 'profile' friend.username %}" class="btn btn-light text-dark dropdown-item d-flex align-items-center p-2 rounded">
     <img 
         src="{{ friend.profile.avatar.url }}" 
         class="me-2 rounded-circle" 
