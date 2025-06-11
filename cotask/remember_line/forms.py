@@ -1,0 +1,28 @@
+from django import forms
+from remember_line.models import Dictionary, Card
+
+
+class DictionaryForm(forms.ModelForm):
+    class Meta:
+        model = Dictionary
+        fields = ['name']
+        labels = {
+            'name': 'Название словаря',
+        }
+
+
+class CardForm(forms.ModelForm):
+    class Meta:
+        model = Card
+        fields = ['dictionary', 'front', 'back']
+        labels = {
+            'dictionary': 'Словарь',
+            'front': 'Лицевая сторона (слово)',
+            'back': 'Оборотная сторона (перевод)',
+        }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['dictionary'].queryset = Dictionary.objects.filter(creator=user)

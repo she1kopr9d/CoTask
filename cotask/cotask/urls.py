@@ -19,6 +19,7 @@ urlpatterns += i18n_patterns(
     path("", include("guest.urls")),
     path("user/", include("user.urls")),
     path("", include("social_media.urls")),
+    path("cards/", include("remember_line.urls")),
     prefix_default_language=True,  # URL без префикса для языка по умолчанию
 )
 

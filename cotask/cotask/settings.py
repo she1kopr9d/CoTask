@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     "user",
     "guest",
     "social_media",
+    "remember_line",
 ]
 
 MIDDLEWARE = [

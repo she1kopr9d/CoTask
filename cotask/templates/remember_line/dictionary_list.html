@@ -1,0 +1,85 @@
+{% extends "components/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>{% trans "Мои словари" %}</h2>
+        <a href="{% url 'dictionary_create' %}" class="btn btn-primary">{% trans "Добавить словарь" %}</a>
+    </div>
+
+    {% if dictionaries %}
+        <ul class="list-group">
+            {% for dictionary in dictionaries %}
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <a class="text-decoration-none" data-bs-toggle="collapse" href="#dict-{{ dictionary.id }}" role="button" aria-expanded="false" aria-controls="dict-{{ dictionary.id }}">
+                                <strong>{{ dictionary.name }}</strong>
+                            </a>
+                            <div class="text-muted small">
+                                {% trans "Создатель:" %} {{ dictionary.creator.username }}
+                            </div>
+                        </div>
+                        <span class="badge bg-secondary">
+                            {% with card_count=dictionary.cards.count %}
+                                {% if card_count == 1 %}
+                                    {{ card_count }} {% trans "карточка" %}
+                                {% elif card_count < 5 %}
+                                    {{ card_count }} {% trans "карточки" %}
+                                {% else %}
+                                    {{ card_count }} {% trans "карточек" %}
+                                {% endif %}
+                            {% endwith %}
+                        </span>
+                    </div>
+
+                    <div class="collapse mt-2" id="dict-{{ dictionary.id }}">
+                        {% if dictionary.cards.all %}
+                            <ul class="list-group list-group-flush mt-2">
+                                {% for card in dictionary.cards.all %}
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>{{ card.front }}</strong> — {{ card.back }}
+                                                <div class="text-muted small">
+                                                    {% with review=card.reviews.first %}
+                                                        {% if review %}
+                                                            {% trans "Следующее повторение:" %} {{ review.next_review|date:"d.m.Y H:i" }}
+                                                        {% else %}
+                                                            {% trans "Повторение ещё не запланировано." %}
+                                                        {% endif %}
+                                                    {% endwith %}
+                                                </div>
+                                            </div>
+                                            <div class="btn-group">
+                                                {% comment %} <a href="{% url 'card_add_association' card.id %}" class="btn btn-sm btn-outline-secondary"> 
+                                                    {% trans "Добавить ассоциацию" %}
+                                                </a> {% endcomment %}
+                                                <form action="{% url 'card_delete' card.id %}" method="post" onsubmit="return confirm('{% trans "Удалить карточку?" %}')">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                        {% trans "Удалить" %}
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <div class="text-muted mt-2">
+                                {% trans "Нет карточек в этом словаре." %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-info">
+            {% trans "У вас пока нет словарей. Нажмите \"Добавить словарь\", чтобы создать первый." %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

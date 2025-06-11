@@ -1,0 +1,39 @@
+{% extends "components/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-4 text-center">
+    <h2>{% trans "Карточка для повторения" %}</h2>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h3 class="card-title">{{ card.front }}</h3>
+            <p class="card-text text-muted">{% trans "Нажмите, чтобы показать перевод" %}</p>
+
+            <button class="btn btn-outline-info" onclick="document.getElementById('back-side').style.display = 'block'">
+                {% trans "Показать оборот" %}
+            </button>
+
+            <div id="back-side" class="mt-3" style="display: none;">
+                <p class="card-text fs-5">{{ card.back }}</p>
+            </div>
+        </div>
+    </div>
+
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <p>{% trans "Оцените, насколько хорошо вы помнили карточку:" %}</p>
+        <div class="d-flex justify-content-center gap-2 flex-wrap">
+            {% for i in "012345" %}
+                <button name="quality" value="{{ i }}" class="btn btn-outline-primary">
+                    {{ i }}
+                </button>
+            {% endfor %}
+        </div>
+    </form>
+
+    <div class="mt-4">
+        <a href="{% url 'card_review_next' %}" class="btn btn-link">{% trans "Вернуться к следующей карточке" %}</a>
+    </div>
+</div>
+{% endblock %}

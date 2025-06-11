@@ -20,8 +20,9 @@
                         <a class="nav-link active" aria-current="page" href="{% url "guest" %}">{% trans "Главная" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{% trans "О нас" %}</a>
+                        <a class="nav-link" href="{% url "card_dashboard" %}">{% trans "Карточки" %}</a>
                     </li>
+                    
                 </ul>
                 <div class="text-end">
                     <a class="btn btn-light text-dark me-2 dropdown">
