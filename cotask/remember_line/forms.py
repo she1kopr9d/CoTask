@@ -5,9 +5,11 @@ from remember_line.models import Dictionary, Card
 class DictionaryForm(forms.ModelForm):
     class Meta:
         model = Dictionary
-        fields = ['name']
+        fields = ['name', 'is_public', 'is_language']
         labels = {
             'name': 'Название словаря',
+            'is_public': 'Сделать словарь публичным',
+            'is_language': 'Это языковой словарь',
         }
 
 

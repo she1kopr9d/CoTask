@@ -8,8 +8,11 @@ User = get_user_model()
 
 class Dictionary(models.Model):
     name = models.CharField(max_length=255)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='dictionaries')
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_dictionaries')
     shared_with = models.ManyToManyField(User, related_name='shared_dictionaries', blank=True)
+
+    is_language = models.BooleanField(default=False, verbose_name="Языковой словарь")
+    is_public = models.BooleanField(default=False, verbose_name="Публичный доступ")
 
     def __str__(self):
         return self.name

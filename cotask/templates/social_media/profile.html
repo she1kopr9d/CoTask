@@ -92,6 +92,18 @@
         {% include "components/friend_card.html" with friend=follower %}
       {% endfor %}
     </div>
+    <div class="bg-light p-4 mt-4 rounded-3 shadow-sm" >
+      <p>{% trans "Языковые словари" %}</p>
+      {% for dictionary in lang_dictionaries %}
+        {% include "components/dict_card.html" with dictionary=dictionary %}
+      {% endfor %}
+    </div>
+    <div class="bg-light p-4 mt-4 rounded-3 shadow-sm" >
+      <p>{% trans "Словари" %}</p>
+      {% for dictionary in not_lang_dictionaries %}
+        {% include "components/dict_card.html" with dictionary=dictionary %}
+      {% endfor %}
+    </div>
   </div>
 </div>
 

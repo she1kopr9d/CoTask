@@ -1,0 +1,42 @@
+{% extends "components/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ dictionary.name }}</h2>
+
+    
+
+    <div class="mb-3">
+        {% if dictionary.is_public %}
+            <span class="badge bg-info text-dark">{% trans "Публичный" %}</span>
+        {% endif %}
+        {% if dictionary.is_language %}
+            <span class="badge bg-success">{% trans "Языковой" %}</span>
+        {% endif %}
+    </div>
+
+    <div class="text-muted mb-4">
+        {% trans "Создатель:" %} {{ dictionary.creator.username }}
+    </div>
+
+    {% if user != dictionary.creator and user not in dictionary.shared_with.all %}
+        <form method="post" action="{% url 'dictionary_add' dictionary.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">{% trans "Добавить словарь себе" %}</button>
+        </form>
+    {% endif %}
+
+    {% if dictionary.cards.all %}
+        <ul class="list-group">
+            {% for card in dictionary.cards.all %}
+                <li class="list-group-item">
+                    <strong>{{ card.front }}</strong> — {{ card.back }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="text-muted">{% trans "Карточек пока нет." %}</div>
+    {% endif %}
+</div>
+{% endblock %}

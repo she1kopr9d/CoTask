@@ -1,0 +1,14 @@
+{% load static %}
+{% load i18n %}
+<a href="{% url 'dictionary_detail' dictionary.id %}" class="btn btn-light text-dark dropdown-item d-flex flex-column align-items-start p-2 rounded">
+    <strong>{{ dictionary.name }}</strong>
+    <div class="text-muted small mt-1">
+        {% if dictionary.is_language %}
+            <span class="badge bg-success me-1">{% trans "Языковой" %}</span>
+        {% endif %}
+        <span class="me-1">
+            {{ dictionary.cards.count }} {% trans "карточек" %}
+        </span>
+        <span class="text-muted">@{{ dictionary.creator.username }}</span>
+    </div>
+</a>

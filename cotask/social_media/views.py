@@ -9,7 +9,7 @@ from social_media.forms import UserProfileForm
 
 
 import social_media.logic.following
-
+import remember_line.logic.card_service
 
 
 @login_required
@@ -51,6 +51,12 @@ def profile_view(request: HttpRequest, username):
     another_user = User.objects.filter(username=username).first()
     followers = social_media.logic.following.get_all_follower(another_user)
     followings = social_media.logic.following.get_all_following(another_user)
+    lang_dictionaries = remember_line.logic.card_service.get_lang_user_dictionaries(
+        creator=another_user,
+    )
+    not_lang_dictionaries = remember_line.logic.card_service.get_not_lang_user_dictionaries(
+        creator=another_user,
+    )
     return render(
         request,
         'social_media/profile.html',
@@ -62,6 +68,8 @@ def profile_view(request: HttpRequest, username):
             ),
             "followers": followers,
             "followings": followings,
+            "lang_dictionaries": lang_dictionaries,
+            "not_lang_dictionaries": not_lang_dictionaries,
         },
     )
 

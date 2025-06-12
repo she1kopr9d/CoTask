@@ -1,0 +1,28 @@
+{% extends "components/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{% trans "Редактировать теги словаря" %}: {{ dictionary.name }}</h2>
+
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="is_public" id="id_is_public" {% if dictionary.is_public %}checked{% endif %}>
+            <label class="form-check-label" for="id_is_public">
+                {% trans "Публичный словарь" %}
+            </label>
+        </div>
+
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="is_language" id="id_is_language" {% if dictionary.is_language %}checked{% endif %}>
+            <label class="form-check-label" for="id_is_language">
+                {% trans "Языковой словарь" %}
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">{% trans "Сохранить" %}</button>
+        <a href="{% url 'card_dashboard' %}" class="btn btn-secondary">{% trans "Отмена" %}</a>
+    </form>
+</div>
+{% endblock %}

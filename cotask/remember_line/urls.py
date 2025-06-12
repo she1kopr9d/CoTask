@@ -32,11 +32,26 @@ urlpatterns = [
     path(
         'review/<int:card_id>/',
         remember_line.views.card_review_detail_view,
-        name='card_review_detail'
+        name='card_review_detail',
     ),
     path(
         'cards/<int:card_id>/delete/',
         remember_line.views.card_delete,
-        name='card_delete'
+        name='card_delete',
+    ),
+    path(
+        'dictionaries/<int:pk>/edit-tags/',
+        remember_line.views.dictionary_edit_tags,
+        name='dictionary_edit_tags',
+    ),
+    path(
+        'dictionary/<int:pk>/',
+        remember_line.views.dictionary_detail,
+        name='dictionary_detail',
+    ),
+    path(
+        'dictionary/<int:dictionary_id>/add/',
+        remember_line.views.dictionary_add,
+        name='dictionary_add',
     ),
 ]
