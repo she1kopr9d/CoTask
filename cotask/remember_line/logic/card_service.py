@@ -1,5 +1,6 @@
 from remember_line.models import Card, Dictionary
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 
 User = get_user_model()
 
@@ -31,24 +32,27 @@ def create_card(dictionary: Dictionary, creator: User, front: str, back: str) ->
     )
 
 
-def get_user_dictionaries(creator: User):
+def get_user_dictionaries(user: User):
+    return Dictionary.objects.filter(
+        is_public=True
+    ).filter(
+        Q(creator=user) | Q(shared_with=user)
+    ).distinct()
+
+
+def get_lang_user_dictionaries(user: User):
     return Dictionary.objects.filter(
         is_public=True,
-        creator=creator,
-    ).all()
+        is_language=True
+    ).filter(
+        Q(creator=user) | Q(shared_with=user)
+    ).distinct()
 
 
-def get_lang_user_dictionaries(creator: User):
+def get_not_lang_user_dictionaries(user: User):
     return Dictionary.objects.filter(
         is_public=True,
-        creator=creator,
-        is_language=True,
-    ).all()
-
-
-def get_not_lang_user_dictionaries(creator: User):
-    return Dictionary.objects.filter(
-        is_public=True,
-        creator=creator,
-        is_language=False,
-    ).all()
+        is_language=False
+    ).filter(
+        Q(creator=user) | Q(shared_with=user)
+    ).distinct()

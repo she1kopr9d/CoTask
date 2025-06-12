@@ -80,28 +80,48 @@
     <div class="bg-light p-4 rounded-3 shadow-sm" ></div>
   </div>
   <div class="col-4 ps-0">
-    <div class="bg-light p-4 rounded-3 shadow-sm" >
-      <p>{% trans "Подписки" %}</p>
-      {% for following in followings %}
-        {% include "components/friend_card.html" with friend=following %}
+    <div class="bg-light p-4 rounded-3 shadow-sm">
+      <p>
+          <a href="{% url 'user_followings' another_user.username %}" class="text-decoration-none">
+              {% trans "Подписки" %}
+          </a>
+      </p>
+
+      {% for following in followings|slice:":3" %}
+          {% include "components/friend_card.html" with friend=following %}
       {% endfor %}
     </div>
-    <div class="bg-light p-4 mt-4 rounded-3 shadow-sm" >
-      <p>{% trans "Подписчики" %}</p>
-      {% for follower in followers %}
-        {% include "components/friend_card.html" with friend=follower %}
+    <div class="bg-light p-4 mt-4 rounded-3 shadow-sm">
+      <p>
+          <a href="{% url 'user_followers' another_user.username %}" class="text-decoration-none">
+              {% trans "Подписчики" %}
+          </a>
+      </p>
+
+      {% for follower in followers|slice:":3" %}
+          {% include "components/friend_card.html" with friend=follower %}
       {% endfor %}
     </div>
-    <div class="bg-light p-4 mt-4 rounded-3 shadow-sm" >
-      <p>{% trans "Языковые словари" %}</p>
-      {% for dictionary in lang_dictionaries %}
-        {% include "components/dict_card.html" with dictionary=dictionary %}
+    <div class="bg-light p-4 mt-4 rounded-3 shadow-sm">
+      <p>
+          <a href="{% url 'user_dictionaries' another_user.username %}" class="text-decoration-none">
+              {% trans "Языковые словари" %}
+          </a>
+      </p>
+
+      {% for dictionary in lang_dictionaries|slice:":3" %}
+          {% include "components/dict_card.html" with dictionary=dictionary %}
       {% endfor %}
     </div>
-    <div class="bg-light p-4 mt-4 rounded-3 shadow-sm" >
-      <p>{% trans "Словари" %}</p>
-      {% for dictionary in not_lang_dictionaries %}
-        {% include "components/dict_card.html" with dictionary=dictionary %}
+    <div class="bg-light p-4 mt-4 rounded-3 shadow-sm">
+      <p>
+          <a href="{% url 'user_dictionaries' another_user.username %}" class="text-decoration-none">
+              {% trans "Словари" %}
+          </a>
+      </p>
+
+      {% for dictionary in not_lang_dictionaries|slice:":3" %}
+          {% include "components/dict_card.html" with dictionary=dictionary %}
       {% endfor %}
     </div>
   </div>

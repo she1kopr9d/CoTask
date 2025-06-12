@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.http import HttpResponseForbidden
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 from remember_line.models import CardReview, CardAssociation, Dictionary, Card
 from remember_line.forms import DictionaryForm, CardForm
@@ -220,3 +221,22 @@ def dictionary_add(request, dictionary_id):
         messages.success(request, "Словарь успешно добавлен в вашу коллекцию.")
 
     return redirect("card_dashboard")
+
+
+@login_required
+def user_dictionaries_view(request, username):
+    profile_user = get_object_or_404(User, username=username)
+    is_own_profile = profile_user == request.user
+
+    if is_own_profile:
+        return redirect("dictionary_list")
+
+    owned = Dictionary.objects.filter(creator=profile_user)
+    shared = Dictionary.objects.filter(shared_with=profile_user).exclude(creator=profile_user)
+
+    return render(request, 'remember_line/user_dictionaries.html', {
+        'profile_user': profile_user,
+        'is_own_profile': is_own_profile,
+        'owned_dictionaries': owned,
+        'shared_dictionaries': shared,
+    })

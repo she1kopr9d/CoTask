@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-08 18:59+0000\n"
+"POT-Creation-Date: 2025-06-12 17:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,31 +18,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: templates/components/dict_card.html:7
+#: templates/remember_line/dictionary_detail.html:15
+#: templates/remember_line/dictionary_list.html:29
+#: templates/remember_line/dictionary_list.html:122
+#: templates/remember_line/user_dictionaries.html:29
+msgid "Языковой"
+msgstr "Language"
+
+#: templates/components/dict_card.html:10
+#: templates/remember_line/dictionary_list.html:46
+#: templates/remember_line/dictionary_list.html:139
+#: templates/remember_line/user_dictionaries.html:36
+#: templates/remember_line/user_dictionaries.html:63
+msgid "карточек"
+msgstr "Mind cards"
+
 #: templates/components/header.html:20
 msgid "Главная"
 msgstr "Home"
 
-#: templates/components/header.html:23
-msgid "О нас"
-msgstr "About us"
+#: templates/components/header.html:23 templates/guest/main.html:49
+msgid "Карточки"
+msgstr "Mind cards"
 
-#: templates/components/header.html:35
+#: templates/components/header.html:36
 msgid "Сменить язык"
 msgstr "Change language"
 
-#: templates/components/header.html:47
+#: templates/components/header.html:48
 msgid "Авторизация"
 msgstr "Login"
 
-#: templates/components/header.html:48
+#: templates/components/header.html:49
 msgid "Регистрация"
 msgstr "Sign in"
 
-#: templates/components/header.html:96
+#: templates/components/header.html:97
 msgid "Администрирование"
 msgstr "Admin panel"
 
-#: templates/components/header.html:108
+#: templates/components/header.html:109
 msgid "Выйти"
 msgstr "Log out"
 
@@ -54,11 +70,12 @@ msgstr "Defeat the resistance"
 msgid "Инструмент для творцов, борющихся с внутренним врагом"
 msgstr "A tool for creators fighting the enemy within"
 
-#: templates/guest/main.html:17
+#: templates/guest/main.html:17 templates/remember_line/dashboard.html:32
 msgid "Начать"
 msgstr "Start"
 
-#: templates/guest/main.html:18
+#: templates/guest/main.html:18 templates/remember_line/dictionary_list.html:52
+#: templates/remember_line/dictionary_list.html:145
 msgid "Подробнее"
 msgstr "More"
 
@@ -89,10 +106,6 @@ msgstr "A tool for creators fighting the enemy within"
 #: templates/guest/main.html:48
 msgid "Конкретизатор"
 msgstr "Specifier"
-
-#: templates/guest/main.html:49
-msgid "Карточки"
-msgstr "Mind cards"
 
 #: templates/guest/main.html:50
 msgid "Социальная сеть"
@@ -143,9 +156,321 @@ msgstr "Create account"
 msgid "Первые 14 дней — полный доступ"
 msgstr "First 14 days - full access"
 
+#: templates/remember_line/card_create.html:6
+msgid "Создание карточки"
+msgstr "Create account"
+
+#: templates/remember_line/card_create.html:12
+msgid "Словарь"
+msgstr "Dictionary"
+
+#: templates/remember_line/card_create.html:17
+msgid "Слово / выражение"
+msgstr "Word / phrase"
+
+#: templates/remember_line/card_create.html:22
+msgid "Перевод / значение"
+msgstr "Translate / value"
+
+#: templates/remember_line/card_create.html:26
+#: templates/remember_line/dictionary_create.html:30
+msgid "Создать"
+msgstr "Create"
+
+#: templates/remember_line/card_create.html:27
+#: templates/remember_line/dictionary_create.html:31
+#: templates/remember_line/dictionary_edit_tags.html:25
+msgid "Отмена"
+msgstr "Cancel"
+
+#: templates/remember_line/card_review_detail.html:6
+msgid "Карточка для повторения"
+msgstr "Flashcards for repeat."
+
+#: templates/remember_line/card_review_detail.html:11
+#: templates/remember_line/card_review_next.html:11
+msgid "Нажмите, чтобы показать перевод"
+msgstr "Click to show the translation"
+
+#: templates/remember_line/card_review_detail.html:14
+#: templates/remember_line/card_review_next.html:14
+msgid "Показать оборот"
+msgstr "Look translate"
+
+#: templates/remember_line/card_review_detail.html:25
+#: templates/remember_line/card_review_next.html:25
+msgid "Оцените, насколько хорошо вы помнили карточку:"
+msgstr "Rate how well you remembered the card.:"
+
+#: templates/remember_line/card_review_detail.html:36
+msgid "Вернуться к следующей карточке"
+msgstr "Go back to the next card"
+
+#: templates/remember_line/card_review_done.html:6
+msgid "На сегодня всё!"
+msgstr "That's all for today!"
+
+#: templates/remember_line/card_review_done.html:7
+msgid "Вы повторили все карточки, которые были запланированы на сегодня."
+msgstr "You have repeated all the cards that were scheduled for today."
+
+#: templates/remember_line/card_review_done.html:8
+msgid "Вернуться на главную"
+msgstr "Go back to the main page"
+
+#: templates/remember_line/card_review_next.html:6
+msgid "Повторение карточки"
+msgstr "Repeat cards"
+
+#: templates/remember_line/dashboard.html:6
+msgid "Добро пожаловать в ваш словарь"
+msgstr "Welcome to your dictionary"
+
+#: templates/remember_line/dashboard.html:11
+#: templates/remember_line/dictionary_list.html:8
+#: templates/remember_line/user_dictionaries.html:10
+msgid "Мои словари"
+msgstr "My dictionaries"
+
+#: templates/remember_line/dashboard.html:14
+msgid "Повторить карточки"
+msgstr "Repeat the cards"
+
+#: templates/remember_line/dashboard.html:17
+#, fuzzy
+msgid "Создать карточку"
+msgstr "Create card"
+
+#: templates/remember_line/dashboard.html:24
+msgid "Карточки для повторения сегодня"
+msgstr "Flashcards to repeat today"
+
+#: templates/remember_line/dashboard.html:38
+msgid "На сегодня нет карточек для повторения"
+msgstr "There are no repeat cards for today"
+
+#: templates/remember_line/dashboard.html:46
+msgid "Последние добавленные ассоциации"
+msgstr "Last added associations"
+
+#: templates/remember_line/dashboard.html:50
+msgid "Без текста"
+msgstr "Without text"
+
+#: templates/remember_line/dashboard.html:54
+msgid "Ассоциации пока не добавлены"
+msgstr "Associations have not been added yet"
+
+#: templates/remember_line/dictionary_create.html:6
+msgid "Создать новый словарь"
+msgstr "Create new dictionary"
+
+#: templates/remember_line/dictionary_create.html:12
+msgid "Название словаря"
+msgstr "Dictionary name"
+
+#: templates/remember_line/dictionary_create.html:19
+msgid "Сделать словарь публичным"
+msgstr "Make the dictionary public"
+
+#: templates/remember_line/dictionary_create.html:26
+msgid "Это языковой словарь"
+msgstr "This is a language dictionary"
+
+#: templates/remember_line/dictionary_detail.html:12
+#: templates/remember_line/dictionary_list.html:26
+#: templates/remember_line/dictionary_list.html:119
+#: templates/remember_line/user_dictionaries.html:32
+msgid "Публичный"
+msgstr "Public"
+
+#: templates/remember_line/dictionary_detail.html:20
+#: templates/remember_line/dictionary_list.html:34
+#: templates/remember_line/dictionary_list.html:127
+#: templates/remember_line/user_dictionaries.html:59
+msgid "Создатель:"
+msgstr "Creator:"
+
+#: templates/remember_line/dictionary_detail.html:26
+msgid "Добавить словарь себе"
+msgstr "Add a dictionary to yourself"
+
+#: templates/remember_line/dictionary_detail.html:39
+msgid "Карточек пока нет."
+msgstr "There are no cards yet."
+
+#: templates/remember_line/dictionary_edit_tags.html:6
+msgid "Редактировать теги словаря"
+msgstr "Edit dictionary tags"
+
+#: templates/remember_line/dictionary_edit_tags.html:13
+msgid "Публичный словарь"
+msgstr "Public dictionary"
+
+#: templates/remember_line/dictionary_edit_tags.html:20
+msgid "Языковой словарь"
+msgstr "Language dictionary"
+
+#: templates/remember_line/dictionary_edit_tags.html:24
+msgid "Сохранить"
+msgstr "Save"
+
+#: templates/remember_line/dictionary_list.html:9
+msgid "Добавить словарь"
+msgstr "Create dictionary"
+
+#: templates/remember_line/dictionary_list.html:13
+msgid "Созданные мной словари"
+msgstr "Owned dictionary"
+
+#: templates/remember_line/dictionary_list.html:42
+#: templates/remember_line/dictionary_list.html:135
+msgid "карточка"
+msgstr "card"
+
+#: templates/remember_line/dictionary_list.html:44
+#: templates/remember_line/dictionary_list.html:137
+msgid "карточки"
+msgstr "cards"
+
+#: templates/remember_line/dictionary_list.html:55
+msgid "Редактировать теги"
+msgstr "Edit tags"
+
+#: templates/remember_line/dictionary_list.html:71
+#: templates/remember_line/dictionary_list.html:161
+msgid "Следующее повторение:"
+msgstr "Next repeat:"
+
+#: templates/remember_line/dictionary_list.html:73
+#: templates/remember_line/dictionary_list.html:163
+msgid "Повторение ещё не запланировано."
+msgstr "A repeat has not been scheduled yet."
+
+#: templates/remember_line/dictionary_list.html:79
+msgid "Удалить карточку?"
+msgstr "Delete the card?"
+
+#: templates/remember_line/dictionary_list.html:82
+msgid "Удалить"
+msgstr "Delete"
+
+#: templates/remember_line/dictionary_list.html:92
+#: templates/remember_line/dictionary_list.html:177
+msgid "Нет карточек в этом словаре."
+msgstr "There are no cards in this dictionary."
+
+#: templates/remember_line/dictionary_list.html:101
+msgid "Вы ещё не создали ни одного словаря."
+msgstr "You haven't created any dictionaries yet."
+
+#: templates/remember_line/dictionary_list.html:106
+msgid "Добавленные мной словари"
+msgstr "Dictionaries added by me"
+
+#: templates/remember_line/dictionary_list.html:186
+msgid "Вы не добавляли словари других пользователей."
+msgstr "You did not add other users' dictionaries."
+
+#: templates/remember_line/user_dictionaries.html:12
+msgid "Словари пользователя"
+msgstr "User's dictionaries"
+
+#: templates/remember_line/user_dictionaries.html:18
+msgid "Созданные словари"
+msgstr "Created dictionary"
+
+#: templates/remember_line/user_dictionaries.html:42
+msgid "Пользователь ещё не создавал словари."
+msgstr "The user has not created dictionaries yet."
+
+#: templates/remember_line/user_dictionaries.html:48
+msgid "Подключённые словари"
+msgstr "Connected dictionaries"
+
+#: templates/remember_line/user_dictionaries.html:69
+msgid "Нет подключённых словарей."
+msgstr "There are no connected dictionaries."
+
+#: templates/social_media/followers.html:8
+msgid "Мои подписчики"
+msgstr "My subscribers"
+
+#: templates/social_media/followers.html:10
+#, python-format
+msgid "Подписчики пользователя %(username)s"
+msgstr "Subscribers of user %(username)s"
+
+#: templates/social_media/followers.html:25
+msgid "У вас пока нет подписчиков."
+msgstr "You don't have any subscribers yet."
+
+#: templates/social_media/followers.html:27
+#, python-format
+msgid ""
+"\n"
+"                    На пользователя %(username)s пока никто не подписан.\n"
+"                "
+msgstr ""
+"\n"
+" No one has subscribed to user %(username)s yet.\n"
+" "
+
+#: templates/social_media/followings.html:8
+msgid "Мои подписки"
+msgstr "My subscriptions"
+
+#: templates/social_media/followings.html:10
+#, python-format
+msgid "Подписки пользователя %(username)s"
+msgstr "Subscriptions of user %(username)s"
+
+#: templates/social_media/followings.html:25
+msgid "Вы пока ни на кого не подписаны."
+msgstr "You haven't subscribed to anyone yet."
+
+#: templates/social_media/followings.html:27
+#, python-format
+msgid ""
+"\n"
+"                    Пользователь %(username)s пока ни на кого не подписан.\n"
+"                "
+msgstr ""
+"\n"
+" User %(username)s is not subscribed to anyone yet.\n"
+" "
+
 #: templates/social_media/profile.html:12
 msgid "Редактировать"
 msgstr "Edit"
+
+#: templates/social_media/profile.html:15
+#, fuzzy
+#| msgid "Зарегистрироваться"
+msgid "Отписаться"
+msgstr "Sign in"
+
+#: templates/social_media/profile.html:17
+#, fuzzy
+#| msgid "Зарегистрироваться"
+msgid "Подписаться"
+msgstr "Sign in"
+
+#: templates/social_media/profile.html:88
+msgid "Подписки"
+msgstr "Followed"
+
+#: templates/social_media/profile.html:99
+msgid "Подписчики"
+msgstr "Followers"
+
+#: templates/social_media/profile.html:110
+msgid "Языковые словари"
+msgstr "Language dictionaries"
+
+#: templates/social_media/profile.html:121
+msgid "Словари"
+msgstr "Dictionaries"
 
 #: templates/user/login.html:11
 msgid "Вход в аккаунт"
@@ -223,9 +548,8 @@ msgstr "Already have an account?"
 msgid "Войдите"
 msgstr "Enter"
 
-#, python-format
-#~ msgid "Добро пожаловать, %(username)s!"
-#~ msgstr "Welcome, %(username)s!"
+#~ msgid "О нас"
+#~ msgstr "About us"
 
 #~ msgid "Твоя площадка для победы над Сопротивлением"
 #~ msgstr "Your playground for defeating the Resistance"

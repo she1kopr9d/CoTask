@@ -1,0 +1,34 @@
+{% extends "components/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">
+        {% if viewed_user == request.user %}
+            {% trans "Мои подписки" %}
+        {% else %}
+            {% blocktrans with username=viewed_user.username %}
+                Подписки пользователя {{ username }}
+            {% endblocktrans %}
+        {% endif %}
+    </h2>
+
+    {% if followings %}
+        <div class="bg-light p-4 rounded-3 shadow-sm">
+            {% for following in followings %}
+                {% include "components/friend_card.html" with friend=following %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            {% if viewed_user == request.user %}
+                {% trans "Вы пока ни на кого не подписаны." %}
+            {% else %}
+                {% blocktrans with username=viewed_user.username %}
+                    Пользователь {{ username }} пока ни на кого не подписан.
+                {% endblocktrans %}
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

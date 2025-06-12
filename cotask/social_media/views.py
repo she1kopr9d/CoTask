@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest
 from django.views.decorators.csrf import csrf_protect
 
@@ -52,10 +52,10 @@ def profile_view(request: HttpRequest, username):
     followers = social_media.logic.following.get_all_follower(another_user)
     followings = social_media.logic.following.get_all_following(another_user)
     lang_dictionaries = remember_line.logic.card_service.get_lang_user_dictionaries(
-        creator=another_user,
+        user=another_user,
     )
     not_lang_dictionaries = remember_line.logic.card_service.get_not_lang_user_dictionaries(
-        creator=another_user,
+        user=another_user,
     )
     return render(
         request,
@@ -86,3 +86,33 @@ def unfollow_view(request: HttpRequest, username):
     another_user = User.objects.filter(username=username).first()
     social_media.logic.following.unfollow(request.user, another_user)
     return redirect("profile", username)
+
+
+@login_required
+def followings_view(request, username=None):
+    if username:
+        user = get_object_or_404(User, username=username)
+    else:
+        user = request.user
+
+    followings = social_media.logic.following.get_all_following(user)
+
+    return render(request, 'social_media/followings.html', {
+        'viewed_user': user,
+        'followings': followings,
+    })
+
+
+@login_required
+def followers_view(request, username=None):
+    if username:
+        user = get_object_or_404(User, username=username)
+    else:
+        user = request.user
+
+    followers = social_media.logic.following.get_all_follower(user)
+
+    return render(request, 'social_media/followers.html', {
+        'viewed_user': user,
+        'followers': followers,
+    })

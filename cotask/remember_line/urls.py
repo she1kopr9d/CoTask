@@ -54,4 +54,10 @@ urlpatterns = [
         remember_line.views.dictionary_add,
         name='dictionary_add',
     ),
+    path(
+        '<str:username>/dictionaries/',
+        remember_line.views.user_dictionaries_view,
+        name='user_dictionaries',
+    ),
+
 ]
