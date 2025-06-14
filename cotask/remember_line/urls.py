@@ -40,6 +40,11 @@ urlpatterns = [
         name='card_delete',
     ),
     path(
+        'dictionary/<int:dict_id>/delete/',
+        remember_line.views.dict_delete,
+        name='dict_delete',
+    ),
+    path(
         'dictionaries/<int:pk>/edit-tags/',
         remember_line.views.dictionary_edit_tags,
         name='dictionary_edit_tags',
@@ -59,5 +64,9 @@ urlpatterns = [
         remember_line.views.user_dictionaries_view,
         name='user_dictionaries',
     ),
-
+    path(
+        'card/<int:pk>/edit/',
+        remember_line.views.card_edit_view,
+        name='card_edit',
+    ),
 ]

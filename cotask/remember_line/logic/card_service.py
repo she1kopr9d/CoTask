@@ -1,4 +1,4 @@
-from remember_line.models import Card, Dictionary
+from remember_line.models import Card, Dictionary, CardReview
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 
@@ -29,6 +29,16 @@ def create_card(dictionary: Dictionary, creator: User, front: str, back: str) ->
         creator=creator,
         front=front,
         back=back
+    )
+
+
+def create_card_review(
+    card: Card,
+    user: User,
+):
+    return CardReview.objects.create(
+        card=card,
+        user=user,
     )
 
 

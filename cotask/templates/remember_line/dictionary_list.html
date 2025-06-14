@@ -51,9 +51,6 @@
                             <a href="{% url 'dictionary_detail' dictionary.id %}" class="btn btn-sm btn-outline-info mt-1">
                                 {% trans "Подробнее" %}
                             </a>
-                            <a href="{% url 'dictionary_edit_tags' dictionary.id %}" class="btn btn-sm btn-outline-primary mt-1">
-                                {% trans "Редактировать теги" %}
-                            </a>
                         </div>
                     </div>
 
@@ -75,6 +72,11 @@
                                                     {% endwith %}
                                                 </div>
                                             </div>
+                                            <div class="d-flex">
+                                                <div class="text-end">
+                                            <a href="{% url "card_edit" card.id %}" class="btn btn-sm btn-outline-primary mt-1">
+                                                {% trans "Редактировать" %}
+                                            </a>
                                             <div class="btn-group">
                                                 <form action="{% url 'card_delete' card.id %}" method="post" onsubmit="return confirm('{% trans "Удалить карточку?" %}')">
                                                     {% csrf_token %}
@@ -82,6 +84,8 @@
                                                         {% trans "Удалить" %}
                                                     </button>
                                                 </form>
+                                            </div>
+                                            </div>
                                             </div>
                                         </div>
                                     </li>

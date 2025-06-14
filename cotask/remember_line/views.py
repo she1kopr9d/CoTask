@@ -9,8 +9,8 @@ from django.contrib.auth.models import User
 from remember_line.models import CardReview, CardAssociation, Dictionary, Card
 from remember_line.forms import DictionaryForm, CardForm
 
-from remember_line.logic.card_service import create_dictionary
-from remember_line.logic.review_service import schedule_review
+from remember_line.logic.card_service import create_dictionary, create_card_review
+from remember_line.logic.review_service import schedule_review, add_all_review
 
 
 @login_required
@@ -62,7 +62,7 @@ def dictionary_list_view(request):
 
     card_reviews = {
         review.card_id: review
-        for review in CardReview.objects.filter(user=user, card_id__in=card_ids)
+        for review in CardReview.objects.filter(user=user)
     }
 
     return render(
@@ -108,6 +108,7 @@ def card_create_view(request):
             card = form.save(commit=False)
             card.creator = request.user
             card.save()
+            create_card_review(card, request.user)
             return redirect('card_dashboard')
     else:
         form = CardForm(user=request.user)
@@ -170,10 +171,25 @@ def card_delete(request, card_id):
 
 
 @login_required
+def dict_delete(request, dict_id):
+    dictionary = get_object_or_404(Dictionary, id=dict_id)
+
+    if dictionary.creator != request.user:
+        return HttpResponseForbidden("Вы не можете удалить этот словарь.")
+
+    if request.method == 'POST':
+        dictionary.delete()
+        return redirect('dictionary_list')  # Или на другую нужную страницу
+
+    return redirect('dictionary_list')
+
+
+@login_required
 def dictionary_edit_tags(request, pk):
     dictionary = get_object_or_404(Dictionary, pk=pk, creator=request.user)
 
     if request.method == 'POST':
+        dictionary.name = request.POST["name"]
         dictionary.is_public = 'is_public' in request.POST
         dictionary.is_language = 'is_language' in request.POST
         dictionary.save()
@@ -218,6 +234,7 @@ def dictionary_add(request, dictionary_id):
         messages.info(request, "Словарь уже добавлен.")
     else:
         dictionary.shared_with.add(request.user)
+        add_all_review(request.user, dictionary)
         messages.success(request, "Словарь успешно добавлен в вашу коллекцию.")
 
     return redirect("card_dashboard")
@@ -240,3 +257,22 @@ def user_dictionaries_view(request, username):
         'owned_dictionaries': owned,
         'shared_dictionaries': shared,
     })
+
+
+@login_required
+def card_edit_view(request, pk):
+    card = get_object_or_404(Card, pk=pk, creator=request.user)
+
+    if request.method == 'POST':
+        card.front = request.POST["front"]
+        card.back = request.POST["back"]
+        card.save()
+        return redirect('card_dashboard')
+
+    return render(
+        request,
+        'remember_line/card_edit.html',
+        {
+            'card': card,
+        },
+    )

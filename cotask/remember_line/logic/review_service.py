@@ -1,4 +1,4 @@
-from remember_line.models import CardReview
+from remember_line.models import CardReview, Card, Dictionary
 from django.utils import timezone
 from datetime import timedelta
 
@@ -6,6 +6,15 @@ from datetime import timedelta
 def get_or_create_review(card, user):
     obj, _ = CardReview.objects.get_or_create(card=card, user=user)
     return obj
+
+
+def add_all_review(user, dictionary):
+    cards = Card.objects.filter(
+        dictionary=dictionary
+    ).all()
+
+    for card in cards:
+        get_or_create_review(card, user)
 
 
 def schedule_review(review: CardReview, quality: int):

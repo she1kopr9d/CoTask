@@ -27,6 +27,20 @@
         </form>
     {% endif %}
 
+    {% if user == dictionary.creator%}
+    <a href="{% url 'dictionary_edit_tags' dictionary.id %}" class="btn btn-sm btn-outline-primary mt-1">
+        {% trans "Редактировать" %}
+    </a>
+    <div class="btn-group">
+        <form action="{% url 'dict_delete' dictionary.id %}" method="post" onsubmit="return confirm('{% trans "Удалить словарь?" %}')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-outline-danger">
+                {% trans "Удалить" %}
+            </button>
+        </form>
+    </div>
+    {% endif %}
+
     {% if dictionary.cards.all %}
         <ul class="list-group">
             {% for card in dictionary.cards.all %}
