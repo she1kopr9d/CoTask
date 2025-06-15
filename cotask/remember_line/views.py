@@ -129,6 +129,11 @@ def card_review_next_view(request):
     if not review:
         return render(request, 'remember_line/card_review_done.html')
 
+    associations = CardAssociation.objects.filter(
+        card=review.card,
+        user=request.user,
+    ).select_related('user')
+
     if request.method == 'POST':
         quality = int(request.POST.get('quality'))
         schedule_review(review, quality)
@@ -139,6 +144,7 @@ def card_review_next_view(request):
         'remember_line/card_review_next.html',
         {
             'card': review.card,
+            'associations': associations,
         },
     )
 

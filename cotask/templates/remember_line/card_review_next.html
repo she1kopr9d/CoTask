@@ -2,34 +2,51 @@
 {% load i18n %}
 
 {% block content %}
-<div class="container mt-4 text-center">
-    <h2>{% trans "Повторение карточки" %}</h2>
+<div class="container mt-4">
+    <h2 class="text-center">{% trans "Повторение карточки" %}</h2>
 
-    <div class="card mt-4">
-        <div class="card-body">
-            <h3 class="card-title">{{ card.front }}</h3>
-            <p class="card-text text-muted">{% trans "Нажмите, чтобы показать перевод" %}</p>
+    <div class="row mt-4">
+        <!-- Левая колонка: Ассоциации -->
+        <div class="col-md-4">
+            <h5 class="mb-3">{% trans "Ваши ассоциации" %}</h5>
 
-            <button class="btn btn-outline-info" onclick="document.getElementById('back-side').style.display = 'block'">
-                {% trans "Показать оборот" %}
-            </button>
-
-            <div id="back-side" class="mt-3" style="display: none;">
-                <p class="card-text fs-5">{{ card.back }}</p>
-            </div>
-        </div>
-    </div>
-
-    <form method="post" class="mt-4">
-        {% csrf_token %}
-        <p>{% trans "Оцените, насколько хорошо вы помнили карточку:" %}</p>
-        <div class="d-flex justify-content-center gap-2 flex-wrap">
-            {% for i in "012345" %}
-                <button name="quality" value="{{ i }}" class="btn btn-outline-primary">
-                    {{ i }}
-                </button>
+            {% for association in associations %}
+                {% include "components/association_card.html" with association=association user=request.user editable=True %}
+            {% empty %}
+                <p class="text-muted">{% trans "Нет ассоциаций для этой карточки." %}</p>
             {% endfor %}
         </div>
-    </form>
+
+        <!-- Правая колонка: Карточка и форма -->
+        <div class="col-md-8 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-body card-title card-text">{{ card.front }}</h3>
+                    <p class="card-text text-muted">{% trans "Нажмите, чтобы показать перевод" %}</p>
+
+                    <button class="btn btn-outline-info"
+                            onclick="document.getElementById('back-side').style.display = 'block'">
+                        {% trans "Показать оборот" %}
+                    </button>
+
+                    <div id="back-side" class="mt-3" style="display: none;">
+                        <p class="card-text fs-5">{{ card.back }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <form method="post" class="mt-4">
+                {% csrf_token %}
+                <p>{% trans "Оцените, насколько хорошо вы помнили карточку:" %}</p>
+                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                    {% for i in "012345" %}
+                        <button name="quality" value="{{ i }}" class="btn btn-outline-primary">
+                            {{ i }}
+                        </button>
+                    {% endfor %}
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

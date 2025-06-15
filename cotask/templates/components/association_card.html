@@ -1,0 +1,36 @@
+{% load i18n %}
+{% load static %}
+<div class="card mb-3 shadow-sm">
+    <div class="card-body">
+
+        <!-- Верхняя строка: имя пользователя и дата -->
+        <div class="d-flex justify-content-between mb-2">
+            <h6 class="card-subtitle text-muted">
+                {{ association.user.username }}
+            </h6>
+            <small class="text-muted">
+                {{ association.created_at|date:"d.m.Y H:i" }}
+            </small>
+        </div>
+
+        <!-- Основной текст ассоциации -->
+        {% if association.text %}
+            <p class="card-text">{{ association.text }}</p>
+        {% endif %}
+
+        <!-- Картинка, если есть -->
+        {% if association.image %}
+            <div class="text-center my-2">
+                <img src="{{ association.image.url }}" alt="Ассоциация" class="img-fluid rounded" style="max-height: 250px;">
+            </div>
+        {% endif %}
+
+        <!-- Пример фразы -->
+        {% if association.example_phrase %}
+            <blockquote class="blockquote">
+                <p class="mb-0">{{ association.example_phrase }}</p>
+                <footer class="blockquote-footer">{% trans "Пример использования" %}</footer>
+            </blockquote>
+        {% endif %}
+    </div>
+</div>
