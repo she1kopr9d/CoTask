@@ -36,9 +36,6 @@ class CardAssociation(models.Model):
     example_phrase = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        unique_together = ('card', 'user')
-
     def __str__(self):
         return f'Ассоциация {self.user.username} к "{self.card.front}"'
 

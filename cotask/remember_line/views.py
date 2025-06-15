@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, Http404
 from django.contrib import messages
 from django.contrib.auth.models import User
 
@@ -282,3 +282,33 @@ def card_edit_view(request, pk):
             'card': card,
         },
     )
+
+
+@login_required
+def delete_association_view(request, pk):
+    association = get_object_or_404(CardAssociation, pk=pk)
+    if association.user != request.user:
+        return Http404()
+
+    if request.method == "POST":
+        association.delete()
+        return redirect("card_review_next")
+
+
+@login_required
+def add_association(request, card_id):
+    card = get_object_or_404(Card, id=card_id)
+    if request.method == "POST":
+        text = request.POST.get("text")
+        image = request.FILES.get("image")
+        example_phrase = request.POST.get("example_phrase")
+
+        association = CardAssociation.objects.create(
+            card=card,
+            user=request.user,
+            text=text,
+            image=image,
+            example_phrase=example_phrase,
+        )
+
+        return redirect("card_review_next")

@@ -69,4 +69,14 @@ urlpatterns = [
         remember_line.views.card_edit_view,
         name='card_edit',
     ),
+    path(
+        "associations/<int:pk>/delete/",
+        remember_line.views.delete_association_view,
+        name="delete_association",
+    ),
+    path(
+        "cards/<int:card_id>/association/add/",
+        remember_line.views.add_association,
+        name="add_association"
+    ),
 ]

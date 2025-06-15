@@ -2,39 +2,39 @@
 {% load i18n %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1 class="mb-4">{% trans "Добро пожаловать в ваш словарь" %}</h1>
+<div class="container mt-5" style="max-width: 720px;">
+    <h1 class="mb-4 text-primary fw-bold">{% trans "Добро пожаловать в ваш словарь" %}</h1>
 
     <!-- Кнопки действий -->
-    <div class="mb-4">
-        <a href="{% url 'dictionary_list' %}" class="btn btn-primary me-2">
+    <div class="mb-4 d-flex flex-wrap gap-3">
+        <a href="{% url 'dictionary_list' %}" class="btn btn-primary px-4 py-2">
             {% trans "Мои словари" %}
         </a>
-        <a href="{% url 'card_review_next' %}" class="btn btn-success me-2">
+        <a href="{% url 'card_review_next' %}" class="btn btn-success px-4 py-2">
             {% trans "Повторить карточки" %}
         </a>
-        <a href="{% url 'card_create' %}" class="btn btn-outline-secondary">
+        <a href="{% url 'card_create' %}" class="btn btn-outline-secondary px-4 py-2">
             {% trans "Создать карточку" %}
         </a> 
     </div>
 
     <!-- Блок карточек на сегодня -->
-    <div class="card">
-        <div class="card-header">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-success text-white fw-semibold fs-5">
             {% trans "Карточки для повторения сегодня" %}
         </div>
         <ul class="list-group list-group-flush">
             {% if cards_to_review %}
                 {% for card in cards_to_review %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ card.front }}
-                            <a href="{% url 'card_review_detail' card.id %}" class="btn btn-sm btn-outline-primary">
+                        <span class="fw-semibold">{{ card.front }}</span>
+                        <a href="{% url 'card_review_detail' card.id %}" class="btn btn-sm btn-outline-primary">
                             {% trans "Начать" %}
                         </a>
                     </li>
                 {% endfor %}
             {% else %}
-                <li class="list-group-item text-muted">
+                <li class="list-group-item text-muted fst-italic text-center">
                     {% trans "На сегодня нет карточек для повторения" %}
                 </li>
             {% endif %}
@@ -43,14 +43,14 @@
 
     <!-- Ассоциации -->
     <div class="mt-5">
-        <h4>{% trans "Последние добавленные ассоциации" %}</h4>
-        <ul class="list-group">
+        <h4 class="text-success fw-semibold mb-3">{% trans "Последние добавленные ассоциации" %}</h4>
+        <ul class="list-group shadow-sm">
             {% for assoc in recent_associations %}
-                <li class="list-group-item">
-                    <strong>{{ assoc.card.front }}</strong> — {{ assoc.text|default:_("Без текста") }}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><strong>{{ assoc.card.front }}</strong> — {{ assoc.text|default:_("Без текста") }}</span>
                 </li>
             {% empty %}
-                <li class="list-group-item text-muted">
+                <li class="list-group-item text-muted fst-italic text-center">
                     {% trans "Ассоциации пока не добавлены" %}
                 </li>
             {% endfor %}

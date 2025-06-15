@@ -27,10 +27,21 @@
 
         <!-- Пример фразы -->
         {% if association.example_phrase %}
-            <blockquote class="blockquote">
-                <p class="mb-0">{{ association.example_phrase }}</p>
-                <footer class="blockquote-footer">{% trans "Пример использования" %}</footer>
+            <blockquote class="blockquote mb-0">
+                <p class="mb-1">{{ association.example_phrase }}</p>
+                <footer class="blockquote-footer mt-1">{% trans "Пример использования" %}</footer>
             </blockquote>
+        {% endif %}
+
+        {% if request.user == association.user %}
+            <div class="mt-3 text-end">
+                <form method="post" action="{% url 'delete_association' association.pk %}" onsubmit="return confirm('{% trans "Удалить ассоциацию?" %}');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                        🗑 {% trans "Удалить" %}
+                    </button>
+                </form>
+            </div>
         {% endif %}
     </div>
 </div>

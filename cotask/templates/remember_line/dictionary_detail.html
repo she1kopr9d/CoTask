@@ -2,39 +2,39 @@
 {% load i18n %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>{{ dictionary.name }}</h2>
-
-    
+<div class="container mt-5" style="max-width: 720px;">
+    <h2 class="mb-3 text-primary fw-bold">{{ dictionary.name }}</h2>
 
     <div class="mb-3">
         {% if dictionary.is_public %}
-            <span class="badge bg-info text-dark">{% trans "Публичный" %}</span>
+            <span class="badge bg-info text-dark me-2">{% trans "Публичный" %}</span>
         {% endif %}
         {% if dictionary.is_language %}
             <span class="badge bg-success">{% trans "Языковой" %}</span>
         {% endif %}
     </div>
 
-    <div class="text-muted mb-4">
-        {% trans "Создатель:" %} {{ dictionary.creator.username }}
-    </div>
+    <p class="text-muted mb-4">
+        {% trans "Создатель:" %} <strong>{{ dictionary.creator.username }}</strong>
+    </p>
 
     {% if user != dictionary.creator and user not in dictionary.shared_with.all %}
-        <form method="post" action="{% url 'dictionary_add' dictionary.id %}">
+        <form method="post" action="{% url 'dictionary_add' dictionary.id %}" class="mb-4">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary">{% trans "Добавить словарь себе" %}</button>
+            <button type="submit" class="btn btn-primary">
+                {% trans "Добавить словарь себе" %}
+            </button>
         </form>
     {% endif %}
 
-    {% if user == dictionary.creator%}
-    <a href="{% url 'dictionary_edit_tags' dictionary.id %}" class="btn btn-sm btn-outline-primary mt-1">
-        {% trans "Редактировать" %}
-    </a>
-    <div class="btn-group">
-        <form action="{% url 'dict_delete' dictionary.id %}" method="post" onsubmit="return confirm('{% trans "Удалить словарь?" %}')">
+    {% if user == dictionary.creator %}
+    <div class="d-flex gap-2 mb-4">
+        <a href="{% url 'dictionary_edit_tags' dictionary.id %}" class="btn btn-outline-primary btn-sm">
+            {% trans "Редактировать" %}
+        </a>
+        <form action="{% url 'dict_delete' dictionary.id %}" method="post" onsubmit="return confirm('{% trans "Удалить словарь?" %}')" class="m-0">
             {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-outline-danger">
+            <button type="submit" class="btn btn-outline-danger btn-sm">
                 {% trans "Удалить" %}
             </button>
         </form>
@@ -42,15 +42,23 @@
     {% endif %}
 
     {% if dictionary.cards.all %}
-        <ul class="list-group">
+        <ul class="list-group shadow-sm">
             {% for card in dictionary.cards.all %}
-                <li class="list-group-item">
-                    <strong>{{ card.front }}</strong> — {{ card.back }}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong class="me-3">{{ card.front }}</strong>
+                        <span class="text-secondary">{{ card.back }}</span>
+                    </div>
+                    {% comment %} <a href="{% url 'card_detail' card.id %}" class="btn btn-sm btn-outline-primary">
+                        {% trans "Подробнее" %}
+                    </a> {% endcomment %}
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <div class="text-muted">{% trans "Карточек пока нет." %}</div>
+        <div class="text-muted fst-italic text-center py-3">
+            {% trans "Карточек пока нет." %}
+        </div>
     {% endif %}
 </div>
 {% endblock %}

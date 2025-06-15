@@ -2,73 +2,75 @@
 {% load i18n %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container my-5">
 
-    <!-- Заголовок -->
-    <h3>
-        {% if is_own_profile %}
-            {% trans "Мои словари" %}
-        {% else %}
-            {% trans "Словари пользователя" %} {{ profile_user.username }}
-        {% endif %}
-    </h3>
+  <h3 class="mb-4">
+    {% if is_own_profile %}
+      {% trans "Мои словари" %}
+    {% else %}
+      {% trans "Словари пользователя" %} <span class="text-primary">{{ profile_user.username }}</span>
+    {% endif %}
+  </h3>
 
-    <!-- Словари, созданные пользователем -->
-    <div class="bg-light p-4 rounded-3 shadow-sm mb-4">
-        <h5>{% trans "Созданные словари" %}</h5>
+  <!-- Созданные словари -->
+  <section class="mb-5 p-4 bg-white rounded shadow-sm">
+    <h5 class="mb-3 fw-semibold">{% trans "Созданные словари" %}</h5>
 
-        {% if owned_dictionaries %}
-            <ul class="list-group">
-                {% for dictionary in owned_dictionaries %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <a href="{% url 'dictionary_detail' dictionary.id %}" class="text-decoration-none">
-                                <strong>{{ dictionary.name }}</strong>
-                            </a>
-                            {% if dictionary.is_language %}
-                                <span class="badge bg-success ms-2">{% trans "Языковой" %}</span>
-                            {% endif %}
-                            {% if dictionary.is_public %}
-                                <span class="badge bg-info text-dark ms-2">{% trans "Публичный" %}</span>
-                            {% endif %}
-                        </div>
-                        <small class="text-muted">
-                            {{ dictionary.cards.count }} {% trans "карточек" %}
-                        </small>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="text-muted">{% trans "Пользователь ещё не создавал словари." %}</p>
-        {% endif %}
-    </div>
+    {% if owned_dictionaries %}
+      <ul class="list-group list-group-flush">
+        {% for dictionary in owned_dictionaries %}
+          <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 py-3">
+            <div class="d-flex align-items-center gap-3">
+              <a href="{% url 'dictionary_detail' dictionary.id %}" class="text-decoration-none fs-5 fw-medium text-dark d-flex align-items-center gap-1">
+                <i class="bi bi-book"></i> {{ dictionary.name }}
+              </a>
 
-    <!-- Подключённые словари -->
-    <div class="bg-light p-4 rounded-3 shadow-sm mb-4">
-        <h5>{% trans "Подключённые словари" %}</h5>
+              {% if dictionary.is_language %}
+                <span class="badge bg-success text-white small">{% trans "Языковой" %}</span>
+              {% endif %}
+              {% if dictionary.is_public %}
+                <span class="badge bg-info text-dark small">{% trans "Публичный" %}</span>
+              {% endif %}
+            </div>
 
-        {% if shared_dictionaries %}
-            <ul class="list-group">
-                {% for dictionary in shared_dictionaries %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <a href="{% url 'dictionary_detail' dictionary.id %}" class="text-decoration-none">
-                                <strong>{{ dictionary.name }}</strong>
-                            </a>
-                            <span class="text-muted small ms-2">
-                                {% trans "Создатель:" %} {{ dictionary.creator.username }}
-                            </span>
-                        </div>
-                        <small class="text-muted">
-                            {{ dictionary.cards.count }} {% trans "карточек" %}
-                        </small>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="text-muted">{% trans "Нет подключённых словарей." %}</p>
-        {% endif %}
-    </div>
+            <div class="text-muted d-flex align-items-center gap-1 small">
+              <i class="bi bi-card-list"></i> {{ dictionary.cards.count }} {% trans "карточек" %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-muted fst-italic">{% trans "Пользователь ещё не создавал словари." %}</p>
+    {% endif %}
+  </section>
+
+  <!-- Подключённые словари -->
+  <section class="p-4 bg-white rounded shadow-sm">
+    <h5 class="mb-3 fw-semibold">{% trans "Подключённые словари" %}</h5>
+
+    {% if shared_dictionaries %}
+      <ul class="list-group list-group-flush">
+        {% for dictionary in shared_dictionaries %}
+          <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 py-3">
+            <div class="d-flex flex-column">
+              <a href="{% url 'dictionary_detail' dictionary.id %}" class="text-decoration-none fs-5 fw-medium text-dark d-flex align-items-center gap-1">
+                <i class="bi bi-book"></i> {{ dictionary.name }}
+              </a>
+              <small class="text-muted">
+                {% trans "Создатель:" %} <span class="fw-semibold">{{ dictionary.creator.username }}</span>
+              </small>
+            </div>
+
+            <div class="text-muted d-flex align-items-center gap-1 small">
+              <i class="bi bi-card-list"></i> {{ dictionary.cards.count }} {% trans "карточек" %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-muted fst-italic">{% trans "Нет подключённых словарей." %}</p>
+    {% endif %}
+  </section>
 
 </div>
 {% endblock %}
