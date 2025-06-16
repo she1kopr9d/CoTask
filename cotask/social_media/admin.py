@@ -1,6 +1,7 @@
-from django.contrib import admin
-from social_media.models import Profile, FollowRelation
+import django.contrib.admin
 
-# Register your models here.
-admin.site.register(FollowRelation)
-admin.site.register(Profile)
+import social_media.models
+
+
+django.contrib.admin.site.register(social_media.models.FollowRelation)
+django.contrib.admin.site.register(social_media.models.Profile)

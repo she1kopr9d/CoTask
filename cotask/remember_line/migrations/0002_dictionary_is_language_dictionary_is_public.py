@@ -13,11 +13,15 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="dictionary",
             name="is_language",
-            field=models.BooleanField(default=False, verbose_name="Языковой словарь"),
+            field=models.BooleanField(
+                default=False, verbose_name="Языковой словарь"
+            ),
         ),
         migrations.AddField(
             model_name="dictionary",
             name="is_public",
-            field=models.BooleanField(default=False, verbose_name="Публичный доступ"),
+            field=models.BooleanField(
+                default=False, verbose_name="Публичный доступ"
+            ),
         ),
     ]

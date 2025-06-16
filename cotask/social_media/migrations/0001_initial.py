@@ -48,7 +48,10 @@ class Migration(migrations.Migration):
                 (
                     "about",
                     models.TextField(
-                        blank=True, default="", null=True, verbose_name="О себе"
+                        blank=True,
+                        default="",
+                        null=True,
+                        verbose_name="О себе",
                     ),
                 ),
                 (

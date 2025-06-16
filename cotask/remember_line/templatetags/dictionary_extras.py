@@ -1,6 +1,7 @@
-from django import template
+import django.template
 
-register = template.Library()
+register = django.template.Library()
+
 
 @register.filter
 def dict_get(d, key):

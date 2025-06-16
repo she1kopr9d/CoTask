@@ -1,13 +1,15 @@
 import os
-from pathlib import Path
+import pathlib
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-ar01s&5_s$crk35dpcdg4bstrc6k=^2(#9tcf_vv%l@2stvj#h"
+SECRET_KEY = (
+    "django-insecure-ar01s&5_s$crk35dpcdg4bstrc6k=^2(#9tcf_vv%l@2stvj#h"
+)
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "*"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -30,7 +32,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'django.middleware.locale.LocaleMiddleware',
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "cotask.urls"
@@ -72,16 +74,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation."
+        "UserAttributeSimilarityValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME": "django.contrib.auth.password_validation."
+        "MinimumLengthValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation."
+        "CommonPasswordValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation."
+        "NumericPasswordValidator",
     },
 ]
 
@@ -96,61 +102,37 @@ USE_TZ = True
 
 USE_L10N = True
 
+STATIC_URL = "/static/"
 
+STATIC_ROOT = os.path.join(BASE_DIR, "collected_static")
 
-# STATIC_URL = "/static/"
-
-# STATIC_ROOT = (BASE_DIR / 'static')
-
-# STATICFILES_DIRS = [BASE_DIR / 'static']
-
-
-# MEDIA_ROOT = (BASE_DIR / 'media')
-
-# MEDIA_URL = '/media/'
-
-
-#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# URL для браузера
-STATIC_URL = '/static/'
-
-# Путь для сбора статики командой collectstatic
-STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
-
-# Директории с исходной статикой
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'templates', 'src'),
+    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "templates", "src"),
 ]
 
-# Медиафайлы
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# STATIC_URL = '/static/'
-# STATIC_ROOT = '/app/static'  # Должен совпадать с путем в Nginx
-# STATICFILES_DIRS = ('/app/static',)
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = '/app/media'
-
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 LOGOUT_REDIRECT_URL = "/"
 
-LOGIN_REDIRECT_URL = 'feed'
+LOGIN_REDIRECT_URL = "feed"
 
-
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = "ru"
 USE_I18N = True
 
 LANGUAGES = [
-    ('ru', 'Русский'),
-    ('en', 'English'),
+    ("ru", "Русский"),
+    ("en", "English"),
 ]
 
 LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, "locale"),
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost', 'http://127.0.0.1', 'https://ваш-домен.ru']
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost",
+    "http://127.0.0.1",
+    "https://ваш-домен.ru",
+]
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

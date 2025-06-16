@@ -1,15 +1,20 @@
-from remember_line.models import CardReview, Card, Dictionary
-from django.utils import timezone
-from datetime import timedelta
+import datetime
+
+import django.utils
+
+import remember_line.models
 
 
 def get_or_create_review(card, user):
-    obj, _ = CardReview.objects.get_or_create(card=card, user=user)
+    obj, _ = remember_line.models.CardReview.objects.get_or_create(
+        card=card,
+        user=user,
+    )
     return obj
 
 
 def add_all_review(user, dictionary):
-    cards = Card.objects.filter(
+    cards = remember_line.models.Card.objects.filter(
         dictionary=dictionary
     ).all()
 
@@ -17,11 +22,7 @@ def add_all_review(user, dictionary):
         get_or_create_review(card, user)
 
 
-def schedule_review(review: CardReview, quality: int):
-    """
-    Обновляет карточку повторения по алгоритму SM-2.
-    quality: 0-5
-    """
+def schedule_review(review: remember_line.models.CardReview, quality: int):
     if quality < 3:
         review.repetitions = 0
         review.interval = 1
@@ -36,9 +37,12 @@ def schedule_review(review: CardReview, quality: int):
         review.repetitions += 1
         review.ease_factor = max(
             1.3,
-            review.ease_factor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02))
+            review.ease_factor
+            + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)),
         )
 
-    review.next_review = timezone.now() + timedelta(days=review.interval)
+    review.next_review = django.utils.timezone.now() + datetime.timedelta(
+        days=review.interval,
+    )
     review.save()
     return review

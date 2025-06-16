@@ -1,8 +1,10 @@
-from remember_line.models import Card, Dictionary, CardReview
-from django.contrib.auth import get_user_model
-from django.db.models import Q
+import django.contrib.auth
+import django.db.models
 
-User = get_user_model()
+import remember_line.models
+
+
+User = django.contrib.auth.get_user_model()
 
 
 def create_dictionary(
@@ -10,8 +12,8 @@ def create_dictionary(
     creator: User,
     is_language: bool,
     is_public: bool,
-) -> Dictionary:
-    return Dictionary.objects.create(
+) -> remember_line.models.Dictionary:
+    return remember_line.models.Dictionary.objects.create(
         name=name,
         creator=creator,
         is_language=is_language,
@@ -19,50 +21,63 @@ def create_dictionary(
     )
 
 
-def share_dictionary(dictionary: Dictionary, user: User):
+def share_dictionary(dictionary: remember_line.models.Dictionary, user: User):
     dictionary.shared_with.add(user)
 
 
-def create_card(dictionary: Dictionary, creator: User, front: str, back: str) -> Card:
-    return Card.objects.create(
-        dictionary=dictionary,
-        creator=creator,
-        front=front,
-        back=back
+def create_card(
+    dictionary: remember_line.models.Dictionary,
+    creator: User,
+    front: str,
+    back: str,
+) -> remember_line.models.Card:
+    return remember_line.models.Card.objects.create(
+        dictionary=dictionary, creator=creator, front=front, back=back
     )
 
 
 def create_card_review(
-    card: Card,
+    card: remember_line.models.Card,
     user: User,
 ):
-    return CardReview.objects.create(
+    return remember_line.models.CardReview.objects.create(
         card=card,
         user=user,
     )
 
 
 def get_user_dictionaries(user: User):
-    return Dictionary.objects.filter(
-        is_public=True
-    ).filter(
-        Q(creator=user) | Q(shared_with=user)
-    ).distinct()
+    return (
+        remember_line.models.Dictionary.objects.filter(is_public=True)
+        .filter(
+            django.db.models.Q(creator=user)
+            | django.db.modelsQ(shared_with=user)
+        )
+        .distinct()
+    )
 
 
 def get_lang_user_dictionaries(user: User):
-    return Dictionary.objects.filter(
-        is_public=True,
-        is_language=True
-    ).filter(
-        Q(creator=user) | Q(shared_with=user)
-    ).distinct()
+    return (
+        remember_line.models.Dictionary.objects.filter(
+            is_public=True, is_language=True
+        )
+        .filter(
+            django.db.models.Q(creator=user)
+            | django.db.models.Q(shared_with=user)
+        )
+        .distinct()
+    )
 
 
 def get_not_lang_user_dictionaries(user: User):
-    return Dictionary.objects.filter(
-        is_public=True,
-        is_language=False
-    ).filter(
-        Q(creator=user) | Q(shared_with=user)
-    ).distinct()
+    return (
+        remember_line.models.Dictionary.objects.filter(
+            is_public=True, is_language=False
+        )
+        .filter(
+            django.db.models.Q(creator=user)
+            | django.db.models.Q(shared_with=user)
+        )
+        .distinct()
+    )

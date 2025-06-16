@@ -1,8 +1,8 @@
-from django import template
+import django.template
 
-register = template.Library()
+register = django.template.Library()
 
 
-@register.filter(name='add_class')
+@register.filter(name="add_class")
 def add_class(field, css_class):
     return field.as_widget(attrs={"class": css_class})

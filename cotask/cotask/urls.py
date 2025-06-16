@@ -1,27 +1,31 @@
 import cotask.settings
 
-from django.contrib import admin
-from django.urls import path, include
-from django.conf.urls.i18n import i18n_patterns
-from django.conf.urls.static import static
+import django.contrib
+import django.contrib.admin
+import django.urls
+import django.conf.urls.i18n
+import django.conf.urls.static
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    django.urls.path("admin/", django.contrib.admin.site.urls),
 ]
 
 
 urlpatterns += [
-    path("i18n/", include("django.conf.urls.i18n")),
+    django.urls.path("i18n/", django.urls.include("django.conf.urls.i18n")),
 ]
 
-urlpatterns += i18n_patterns(
-    path("", include("guest.urls")),
-    path("user/", include("user.urls")),
-    path("", include("social_media.urls")),
-    path("cards/", include("remember_line.urls")),
-    prefix_default_language=True,  # URL без префикса для языка по умолчанию
+urlpatterns += django.conf.urls.i18n.i18n_patterns(
+    django.urls.path("", django.urls.include("guest.urls")),
+    django.urls.path("user/", django.urls.include("user.urls")),
+    django.urls.path("", django.urls.include("social_media.urls")),
+    django.urls.path("cards/", django.urls.include("remember_line.urls")),
+    prefix_default_language=True,
 )
 
 if cotask.settings.DEBUG:
-    urlpatterns += static(cotask.settings.MEDIA_URL, document_root=cotask.settings.MEDIA_ROOT)
+    urlpatterns += django.conf.urls.static.static(
+        cotask.settings.MEDIA_URL,
+        document_root=cotask.settings.MEDIA_ROOT,
+    )

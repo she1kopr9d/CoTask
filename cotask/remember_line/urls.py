@@ -1,82 +1,82 @@
-from django.urls import path
+import django.urls
 
 import remember_line.views
 
 
 urlpatterns = [
-    path(
+    django.urls.path(
         "dashboard/",
         remember_line.views.dashboard_view,
         name="card_dashboard",
     ),
-    path(
+    django.urls.path(
         "dictionary_list/",
         remember_line.views.dictionary_list_view,
         name="dictionary_list",
     ),
-    path(
+    django.urls.path(
         "dictionary_create/",
         remember_line.views.dictionary_create_view,
         name="dictionary_create",
     ),
-    path(
+    django.urls.path(
         "card_create/",
         remember_line.views.card_create_view,
         name="card_create",
     ),
-    path(
+    django.urls.path(
         "review/",
         remember_line.views.card_review_next_view,
         name="card_review_next",
     ),
-    path(
-        'review/<int:card_id>/',
+    django.urls.path(
+        "review/<int:card_id>/",
         remember_line.views.card_review_detail_view,
-        name='card_review_detail',
+        name="card_review_detail",
     ),
-    path(
-        'cards/<int:card_id>/delete/',
+    django.urls.path(
+        "cards/<int:card_id>/delete/",
         remember_line.views.card_delete,
-        name='card_delete',
+        name="card_delete",
     ),
-    path(
-        'dictionary/<int:dict_id>/delete/',
+    django.urls.path(
+        "dictionary/<int:dict_id>/delete/",
         remember_line.views.dict_delete,
-        name='dict_delete',
+        name="dict_delete",
     ),
-    path(
-        'dictionaries/<int:pk>/edit-tags/',
+    django.urls.path(
+        "dictionaries/<int:pk>/edit-tags/",
         remember_line.views.dictionary_edit_tags,
-        name='dictionary_edit_tags',
+        name="dictionary_edit_tags",
     ),
-    path(
-        'dictionary/<int:pk>/',
+    django.urls.path(
+        "dictionary/<int:pk>/",
         remember_line.views.dictionary_detail,
-        name='dictionary_detail',
+        name="dictionary_detail",
     ),
-    path(
-        'dictionary/<int:dictionary_id>/add/',
+    django.urls.path(
+        "dictionary/<int:dictionary_id>/add/",
         remember_line.views.dictionary_add,
-        name='dictionary_add',
+        name="dictionary_add",
     ),
-    path(
-        '<str:username>/dictionaries/',
+    django.urls.path(
+        "<str:username>/dictionaries/",
         remember_line.views.user_dictionaries_view,
-        name='user_dictionaries',
+        name="user_dictionaries",
     ),
-    path(
-        'card/<int:pk>/edit/',
+    django.urls.path(
+        "card/<int:pk>/edit/",
         remember_line.views.card_edit_view,
-        name='card_edit',
+        name="card_edit",
     ),
-    path(
+    django.urls.path(
         "associations/<int:pk>/delete/",
         remember_line.views.delete_association_view,
         name="delete_association",
     ),
-    path(
+    django.urls.path(
         "cards/<int:card_id>/association/add/",
         remember_line.views.add_association,
-        name="add_association"
+        name="add_association",
     ),
 ]

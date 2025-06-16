@@ -15,7 +15,9 @@ class Migration(migrations.Migration):
             model_name="profile",
             name="avatar",
             field=models.ImageField(
-                default=django.utils.timezone.now, upload_to="", verbose_name="avatar"
+                default=django.utils.timezone.now,
+                upload_to="",
+                verbose_name="avatar",
             ),
             preserve_default=False,
         ),

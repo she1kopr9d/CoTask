@@ -1,30 +1,33 @@
-from django import forms
-from remember_line.models import Dictionary, Card
+import django.forms
+
+import remember_line.models
 
 
-class DictionaryForm(forms.ModelForm):
+class DictionaryForm(django.forms.ModelForm):
     class Meta:
-        model = Dictionary
-        fields = ['name', 'is_public', 'is_language']
+        model = remember_line.models.Dictionary
+        fields = ["name", "is_public", "is_language"]
         labels = {
-            'name': 'Название словаря',
-            'is_public': 'Сделать словарь публичным',
-            'is_language': 'Это языковой словарь',
+            "name": "Название словаря",
+            "is_public": "Сделать словарь публичным",
+            "is_language": "Это языковой словарь",
         }
 
 
-class CardForm(forms.ModelForm):
+class CardForm(django.forms.ModelForm):
     class Meta:
-        model = Card
-        fields = ['dictionary', 'front', 'back']
+        model = remember_line.models.Card
+        fields = ["dictionary", "front", "back"]
         labels = {
-            'dictionary': 'Словарь',
-            'front': 'Лицевая сторона (слово)',
-            'back': 'Оборотная сторона (перевод)',
+            "dictionary": "Словарь",
+            "front": "Лицевая сторона (слово)",
+            "back": "Оборотная сторона (перевод)",
         }
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
+        user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
         if user:
-            self.fields['dictionary'].queryset = Dictionary.objects.filter(creator=user)
+            self.fields["dictionary"].queryset = (
+                remember_line.models.Dictionary.objects.filter(creator=user)
+            )

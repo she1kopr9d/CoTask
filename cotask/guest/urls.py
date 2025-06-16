@@ -1,8 +1,6 @@
-from django.urls import path
+import django.urls
 
 import guest.views
 
 
-urlpatterns = [
-    path("", guest.views.index, name="guest")
-]
+urlpatterns = [django.urls.path("", guest.views.index, name="guest")]
