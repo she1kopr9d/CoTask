@@ -1,5 +1,5 @@
-import django.urls
 import django.contrib.auth.views
+import django.urls
 
 import user.views
 

@@ -1,10 +1,7 @@
-import sys
-import io
 import PIL.Image
 
-import django.db.models
 import django.contrib.auth.models
-import django.core.files.uploadedfile
+import django.db.models
 
 
 class Profile(django.db.models.Model):
@@ -34,30 +31,28 @@ class Profile(django.db.models.Model):
     )
 
     def save(self, *args, **kwargs):
-        if self.avatar and (
-            not self.pk
-            or Profile.objects.get(pk=self.pk).avatar != self.avatar
-        ):
-            img = PIL.Image.open(self.avatar)
-
-            if img.mode in ("RGBA", "P"):
-                img = img.convert("RGB")
-
-            img.thumbnail((200, 200))
-
-            output = io.BytesIO()
-            img.save(output, format="JPEG", quality=90)
-            output.seek(0)
-
-            self.avatar = django.core.files.uploadedfile.InMemoryUploadedFile(
-                output,
-                "ImageField",
-                f"{self.avatar.name.split('.')[0]}.jpg",
-                "image/jpeg",
-                sys.getsizeof(output),
-                None,
-            )
-        super().save(*args, **kwargs)
+        super().save()
+        img = PIL.Image.open(self.avatar.path)
+        if img.height > img.width:
+            left = 0
+            right = img.width
+            top = (img.height - img.width) / 2
+            bottom = (img.height + img.width) / 2
+            img = img.crop((left, top, right, bottom))
+            if img.height > 300 or img.width > 300:
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+                img.save(self.avatar.path)
+        elif img.width > img.height:
+            left = (img.width - img.height) / 2
+            right = (img.width + img.height) / 2
+            top = 0
+            bottom = img.height
+            img = img.crop((left, top, right, bottom))
+            if img.height > 300 or img.width > 300:
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+                img.save(self.avatar.path)
 
 
 class FollowRelation(django.db.models.Model):

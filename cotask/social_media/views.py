@@ -1,12 +1,12 @@
-import django.contrib.auth.decorators
-import django.shortcuts
-import django.http
-import django.views.decorators.csrf
 import django.contrib.auth.models
+import django.contrib.auth.decorators
+import django.http
+import django.shortcuts
+import django.views.decorators.csrf
 
-import social_media.models
 import social_media.forms
 import social_media.logic.following
+import social_media.models
 
 import remember_line.logic.card_service
 

@@ -12,16 +12,21 @@ DEBUG = True
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "*"]
 
 INSTALLED_APPS = [
+    # django
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # another
+    "channels",
+    # my
     "user",
     "guest",
     "social_media",
     "remember_line",
+    "chat",
 ]
 
 MIDDLEWARE = [
@@ -53,6 +58,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "cotask.wsgi.application"
+ASGI_APPLICATION = "cotask.asgi.application"
 
 # DATABASES = {
 #     "default": {
@@ -70,6 +76,15 @@ DATABASES = {
         "HOST": "db",
         "PORT": "5432",
     }
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],
+        },
+    },
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -133,6 +148,5 @@ LOCALE_PATHS = [
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost",
     "http://127.0.0.1",
-    "https://ваш-домен.ru",
 ]
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

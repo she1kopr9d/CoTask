@@ -1,0 +1,105 @@
+{% extends 'components/base.html' %}
+
+{% block content %}
+<div id="chat-container" class="container-fluid d-flex flex-column vh-100 p-0">
+  <div id="chat-header" class="bg-white shadow-sm py-3 px-4 fw-semibold fs-4">
+    Чат: {{ room_name }}
+  </div>
+
+  <div id="chat-log" class="flex-grow-1 overflow-auto bg-white px-3 py-3">
+    {% for msg in messages %}
+      <div class="d-flex mb-3 {% if msg.sender.username == username %}justify-content-end{% else %}justify-content-start{% endif %}">
+        <div class="p-3 rounded-3 shadow-sm"
+             style="max-width: 70%; 
+                    background-color: {% if msg.sender.username == username %}#0088cc{% else %}#e5e5ea{% endif %};
+                    color: {% if msg.sender.username == username %}white{% else %}black{% endif %};
+                    word-break: break-word;
+                    border-bottom-left-radius: {% if msg.sender.username == username %}18px{% else %}4px{% endif %};
+                    border-bottom-right-radius: {% if msg.sender.username == username %}4px{% else %}18px{% endif %};"
+        >
+          <div class="fw-semibold mb-1 small">
+            {% if msg.sender.username == username %}
+              Вы
+            {% else %}
+              {{ msg.sender.username }}
+            {% endif %}
+          </div>
+          <div style="white-space: pre-wrap;">{{ msg.text }}</div>
+          <div class="text-end mt-1" style="font-size: 0.7rem; opacity: 0.7;">
+            {{ msg.timestamp|date:"H:i" }}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-muted text-center mt-3">Сообщений пока нет</p>
+    {% endfor %}
+  </div>
+
+  <form id="chat-form" class="d-flex bg-white shadow-sm p-3" autocomplete="off">
+    <input id="chat-message-input" type="text" class="form-control form-control-lg" placeholder="Введите сообщение..." aria-label="Сообщение" />
+    <button id="chat-message-submit" class="btn btn-primary ms-2 px-4" type="submit">Отправить</button>
+  </form>
+</div>
+
+<script>
+  const username = "{{ username|escapejs }}";
+  const roomName = "{{ room_name }}";
+  const chatLog = document.getElementById("chat-log");
+
+  const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+  const chatSocket = new WebSocket(
+    `${protocol}://${window.location.host}/ws/chat/${roomName}/`
+  );
+
+  chatSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'd-flex mb-3 ' + (data.sender === username ? 'justify-content-end' : 'justify-content-start');
+
+    const bubble = document.createElement('div');
+    bubble.className = 'p-3 rounded-3 shadow-sm';
+    bubble.style.maxWidth = '70%';
+    bubble.style.wordBreak = 'break-word';
+    bubble.style.backgroundColor = data.sender === username ? '#0088cc' : '#e5e5ea';
+    bubble.style.color = data.sender === username ? 'white' : 'black';
+    // border radius mimic telegram tail
+    bubble.style.borderBottomLeftRadius = data.sender === username ? '18px' : '4px';
+    bubble.style.borderBottomRightRadius = data.sender === username ? '4px' : '18px';
+
+    bubble.innerHTML = `
+      <div class="fw-semibold mb-1 small">
+        ${data.sender === username ? 'Вы' : data.sender}
+      </div>
+      <div style="white-space: pre-wrap;">${data.message}</div>
+      <div class="text-end mt-1" style="font-size: 0.7rem; opacity: 0.7;">
+        ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+      </div>
+    `;
+
+    wrapper.appendChild(bubble);
+    chatLog.appendChild(wrapper);
+    chatLog.scrollTop = chatLog.scrollHeight;
+  };
+
+  chatSocket.onclose = function(e) {
+    console.error("Chat socket closed unexpectedly");
+  };
+
+  document.getElementById("chat-form").onsubmit = function(e) {
+    e.preventDefault();
+    const input = document.getElementById("chat-message-input");
+    const message = input.value.trim();
+    if (message !== "") {
+      chatSocket.send(JSON.stringify({
+        message: message,
+        username: username
+      }));
+      input.value = "";
+    }
+  };
+
+  // Автопрокрутка при загрузке страницы
+  chatLog.scrollTop = chatLog.scrollHeight;
+</script>
+{% endblock %}

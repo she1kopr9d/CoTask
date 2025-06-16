@@ -3,7 +3,6 @@ import django.contrib
 import remember_line.models
 
 
-# Inline для карточек внутри словаря
 class CardInline(django.contrib.admin.TabularInline):
     model = remember_line.models.Card
     extra = 0

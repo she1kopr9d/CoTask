@@ -1,15 +1,15 @@
-import django.db.models
-import django.shortcuts
-import django.contrib.auth.decorators
-import django.utils.timezone
-import django.http
 import django.contrib.messages
 import django.contrib.auth.models
+import django.contrib.auth.decorators
+import django.db.models
+import django.http
+import django.shortcuts
+import django.utils.timezone
 
-import remember_line.models
 import remember_line.forms
 import remember_line.logic.card_service
 import remember_line.logic.review_service
+import remember_line.models
 
 
 @django.contrib.auth.decorators.login_required

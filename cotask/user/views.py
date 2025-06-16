@@ -1,5 +1,5 @@
-import django.shortcuts
 import django.contrib.auth
+import django.shortcuts
 
 import user.forms
 import user.logic.profile

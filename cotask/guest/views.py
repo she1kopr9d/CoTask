@@ -1,5 +1,5 @@
-import django.shortcuts
 import django.http
+import django.shortcuts
 
 
 def index(request: django.http.HttpRequest):

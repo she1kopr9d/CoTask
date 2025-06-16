@@ -1,0 +1,43 @@
+{% extends 'components/base.html' %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 700px;">
+  <h2 class="mb-4 fw-bold text-primary">Мои чаты</h2>
+
+  {% if chats %}
+    <div class="list-group shadow-sm rounded">
+      {% for chat in chats %}
+        <a href="{% url 'chat:chat_room' chat.id %}" 
+           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center 
+                  py-3 px-4 border-0 rounded mb-2"
+           style="background: #f9fafb; transition: background-color 0.3s, box-shadow 0.3s;">
+          <div>
+            <strong class="fs-5 text-dark">{{ chat.room_name }}</strong><br>
+            <small class="text-secondary fst-italic">Создан: {{ chat.created_at|date:"d.m.Y H:i" }}</small>
+          </div>
+          {% if chat.unread_messages_count > 0 %}
+            <span class="badge bg-danger rounded-pill fs-6">
+              {{ chat.unread_messages_count }}
+            </span>
+          {% else %}
+            <span class="badge bg-secondary rounded-pill fs-6">
+              0
+            </span>
+          {% endif %}
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info shadow-sm rounded">
+      У вас пока нет чатов. Начните новый разговор!
+    </div>
+  {% endif %}
+</div>
+
+<style>
+  .list-group-item:hover {
+    background-color: #e3f2fd !important; /* светло-голубой при наведении */
+    box-shadow: 0 4px 8px rgb(0 123 255 / 0.2);
+  }
+</style>
+{% endblock %}

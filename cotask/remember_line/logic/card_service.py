@@ -51,7 +51,7 @@ def get_user_dictionaries(user: User):
         remember_line.models.Dictionary.objects.filter(is_public=True)
         .filter(
             django.db.models.Q(creator=user)
-            | django.db.modelsQ(shared_with=user)
+            | django.db.models.Q(shared_with=user)
         )
         .distinct()
     )

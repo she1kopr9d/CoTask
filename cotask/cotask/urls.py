@@ -21,6 +21,9 @@ urlpatterns += django.conf.urls.i18n.i18n_patterns(
     django.urls.path("user/", django.urls.include("user.urls")),
     django.urls.path("", django.urls.include("social_media.urls")),
     django.urls.path("cards/", django.urls.include("remember_line.urls")),
+    django.urls.path(
+        "chat/", django.urls.include("chat.urls", namespace="chat")
+    ),
     prefix_default_language=True,
 )
 

@@ -13,5 +13,4 @@ COPY requirements/prod.txt .
 RUN pip install --no-cache-dir -r prod.txt
 COPY . .
 
-# Сборка статических файлов
 CMD ["./start.sh"]
