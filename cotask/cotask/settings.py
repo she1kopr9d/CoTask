@@ -118,13 +118,7 @@ USE_TZ = True
 USE_L10N = True
 
 STATIC_URL = "/static/"
-
-STATIC_ROOT = os.path.join(BASE_DIR, "collected_static")
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "templates", "src"),
-]
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -148,5 +142,14 @@ LOCALE_PATHS = [
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost",
     "http://127.0.0.1",
+    "http://172.21.0.0"
+    "https://1mw5g0mc-80.uks1.devtunnels.ms"
 ]
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+#SECURE_SSL_REDIRECT = True
+
+# PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '../../')
+# WWW_ROOT = PROJECT_ROOT + 'www/'
+# MEDIA_ADMIN = WWW_ROOT+'admin/media/' #там статика лежит
+
+# ADMIN_MEDIA_PREFIX = '/admin/media/'

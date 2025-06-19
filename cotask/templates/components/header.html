@@ -29,6 +29,9 @@
                 <div class="text-end">
                     <a class="btn btn-light text-dark me-2 dropdown">
                         <img class="dropdown-toggle" type="button" data-bs-toggle="dropdown" src="{% static 'flags/' %}{{ request.LANGUAGE_CODE }}.svg" width="20" class="me-2"/>
+                        {% comment %} <a class="dropdown-toggle" type="button" data-bs-toggle="dropdown" class="me-2" width="20" >
+                            {{ request.LANGUAGE_CODE }}
+                        </a> {% endcomment %}
                         
                         <form action="{% url 'set_language' %}" method="post" class="dropdown-menu">
                             {% csrf_token %}
@@ -40,7 +43,7 @@
                             {% for code, name in LANGUAGES %}
                                 <button type="submit" name="language" value="{{ code }}" 
                                         class="dropdown-item {% if code == request.LANGUAGE_CODE %}active{% endif %}">
-                                    <img src="{% static 'flags/' %}{{ code }}.svg" width="20" class="me-2">
+                                    {% comment %} <img src="{% static 'flags/' %}{{ code }}.svg" width="20" class="me-2"> {% endcomment %}
                                     {{ name }}
                                 </button>
                             {% endfor %}

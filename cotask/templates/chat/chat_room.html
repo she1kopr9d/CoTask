@@ -1,105 +1,148 @@
 {% extends 'components/base.html' %}
 
 {% block content %}
-<div id="chat-container" class="container-fluid d-flex flex-column vh-100 p-0">
-  <div id="chat-header" class="bg-white shadow-sm py-3 px-4 fw-semibold fs-4">
-    Чат: {{ room_name }}
-  </div>
+<!-- Вся страница, кроме header, растянута по оставшемуся пространству -->
+<div class="container-fluid p-0">
+  <div class="d-flex" style="height: calc(100vh - 56px); overflow: hidden;">
+    
+    <!-- Сайдбар с прокруткой -->
+    <div class="border-end bg-light d-flex flex-column" style="width: 280px; flex-shrink: 0;">
+      <h5 class="p-3 border-bottom mb-0">Чаты</h5>
+      <div class="overflow-auto flex-grow-1">
+        <ul class="list-unstyled mb-0">
+          {% for item in chat_list %}
+            <a href="{% url 'chat:chat_room' item.chat.id %}"
+               class="d-flex align-items-center px-3 py-2 text-decoration-none text-dark border-bottom {% if item.chat.slug == room_name %}bg-secondary bg-opacity-25{% endif %}">
+              <img src="{{ item.partner.profile.avatar.url }}" alt="Avatar" class="rounded-circle me-3" width="36" height="36">
+              <div class="flex-grow-1">
+                <div class="fw-semibold">{{ item.partner.first_name }} {{ item.partner.last_name }}</div>
+                <div class="small text-muted text-truncate" style="max-width: 160px;">{{ item.last_message.text|truncatechars:40 }}</div>
+              </div>
+              {% if item.unread_count > 0 %}
+                <span class="badge bg-danger rounded-pill ms-2">{{ item.unread_count }}</span>
+              {% endif %}
+            </a>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
 
-  <div id="chat-log" class="flex-grow-1 overflow-auto bg-white px-3 py-3">
-    {% for msg in messages %}
-      <div class="d-flex mb-3 {% if msg.sender.username == username %}justify-content-end{% else %}justify-content-start{% endif %}">
-        <div class="p-3 rounded-3 shadow-sm"
-             style="max-width: 70%; 
-                    background-color: {% if msg.sender.username == username %}#0088cc{% else %}#e5e5ea{% endif %};
-                    color: {% if msg.sender.username == username %}white{% else %}black{% endif %};
-                    word-break: break-word;
-                    border-bottom-left-radius: {% if msg.sender.username == username %}18px{% else %}4px{% endif %};
-                    border-bottom-right-radius: {% if msg.sender.username == username %}4px{% else %}18px{% endif %};"
-        >
-          <div class="fw-semibold mb-1 small">
-            {% if msg.sender.username == username %}
-              Вы
-            {% else %}
-              {{ msg.sender.username }}
-            {% endif %}
-          </div>
-          <div style="white-space: pre-wrap;">{{ msg.text }}</div>
-          <div class="text-end mt-1" style="font-size: 0.7rem; opacity: 0.7;">
-            {{ msg.timestamp|date:"H:i" }}
-          </div>
+    <!-- Чат -->
+    <div class="flex-grow-1 d-flex flex-column overflow-hidden" style="min-height: 0;">
+      
+      <!-- Хедер чата -->
+      <div class="border-bottom p-3 bg-white d-flex align-items-center justify-content-between flex-shrink-0">
+        <div class="d-flex align-items-center gap-3">
+          <img src="{{ partner.profile.avatar.url }}" alt="Avatar" class="rounded-circle" width="40" height="40">
+          <a href="{% url 'profile' partner.username %}" class="text-decoration-none text-dark fw-semibold fs-5">
+            {{ partner.first_name }} {{ partner.last_name }}
+          </a>
         </div>
       </div>
-    {% empty %}
-      <p class="text-muted text-center mt-3">Сообщений пока нет</p>
-    {% endfor %}
-  </div>
+      <!-- Сообщения с прокруткой -->
+      <div id="chat-log" class="flex-grow-1 overflow-auto px-3 py-2 bg-white" style="min-height: 0;">
+        {% for msg in messages %}
+          <div class="d-flex mb-2 {% if msg.sender.username == username %}justify-content-end{% else %}justify-content-start{% endif %}">
+            {% if msg.sender.username != username %}
+              <img src="{{ msg.sender.profile.avatar.url }}" class="rounded-circle me-2" width="28" height="28" alt="Avatar">
+            {% endif %}
+            <div class="d-flex p-2 rounded {% if msg.sender.username == username %}bg-danger text-white{% else %}bg-light text-dark{% endif %}">
+              <div class="small">{{ msg.text|linebreaksbr }}</div>
+              <div class="small text-muted text-end mt-1 ms-1" style="font-size: 0.7rem;">{{ msg.timestamp|date:"H:i" }}</div>
+            </div>
+            {% if msg.sender.username == username %}
+              <img src="{{ user.profile.avatar.url }}" class="rounded-circle ms-2" width="28" height="28" alt="Avatar">
+            {% endif %}
+          </div>
+        {% empty %}
+          <p class="text-center text-muted mt-3">Сообщений пока нет</p>
+        {% endfor %}
+      </div>
 
-  <form id="chat-form" class="d-flex bg-white shadow-sm p-3" autocomplete="off">
-    <input id="chat-message-input" type="text" class="form-control form-control-lg" placeholder="Введите сообщение..." aria-label="Сообщение" />
-    <button id="chat-message-submit" class="btn btn-primary ms-2 px-4" type="submit">Отправить</button>
-  </form>
+      <!-- Форма ввода -->
+      <form id="chat-form" class="d-flex border-top p-3 bg-white flex-shrink-0" autocomplete="off">
+        <input id="chat-message-input" type="text" class="form-control" placeholder="Введите сообщение..." autofocus>
+        <button id="chat-message-submit" type="submit" class="btn btn-danger ms-2">Отправить</button>
+      </form>
+
+    </div>
+  </div>
 </div>
 
+<!-- WebSocket и JS логика -->
 <script>
   const username = "{{ username|escapejs }}";
-  const roomName = "{{ room_name }}";
+  const roomName = "{{ room_name|escapejs }}";
   const chatLog = document.getElementById("chat-log");
 
   const protocol = window.location.protocol === "https:" ? "wss" : "ws";
-  const chatSocket = new WebSocket(
-    `${protocol}://${window.location.host}/ws/chat/${roomName}/`
-  );
+  const chatSocket = new WebSocket(`${protocol}://${window.location.host}/ws/chat/${roomName}/`);
+
+  function createMessageElement(data) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'd-flex mb-2 ' + (data.sender === username ? 'justify-content-end' : 'justify-content-start');
+
+    const avatar = document.createElement('img');
+    avatar.className = 'rounded-circle';
+    avatar.alt = "Avatar";
+    avatar.width = 28;
+    avatar.height = 28;
+    avatar.src = data.sender === username ? "{{ user.profile.avatar.url }}" : data.avatar_url;
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'd-flex p-2 rounded ' + (data.sender === username ? 'bg-danger text-white' : 'bg-light text-dark');
+
+    const textDiv = document.createElement('div');
+    textDiv.className = 'small';
+    textDiv.innerHTML = data.message.replace(/\n/g, '<br>');
+
+    const timeDiv = document.createElement('div');
+    timeDiv.className = 'small text-muted text-end mt-1 ms-1';
+    timeDiv.style.fontSize = '0.7rem';
+    const now = new Date();
+    timeDiv.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    messageDiv.appendChild(textDiv);
+    messageDiv.appendChild(timeDiv);
+
+    if (data.sender === username) {
+      wrapper.appendChild(messageDiv);
+      wrapper.appendChild(avatar);
+      avatar.classList.add('ms-2');
+    } else {
+      wrapper.appendChild(avatar);
+      wrapper.appendChild(messageDiv);
+      avatar.classList.add('me-2');
+    }
+
+    return wrapper;
+  }
 
   chatSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'd-flex mb-3 ' + (data.sender === username ? 'justify-content-end' : 'justify-content-start');
-
-    const bubble = document.createElement('div');
-    bubble.className = 'p-3 rounded-3 shadow-sm';
-    bubble.style.maxWidth = '70%';
-    bubble.style.wordBreak = 'break-word';
-    bubble.style.backgroundColor = data.sender === username ? '#0088cc' : '#e5e5ea';
-    bubble.style.color = data.sender === username ? 'white' : 'black';
-    // border radius mimic telegram tail
-    bubble.style.borderBottomLeftRadius = data.sender === username ? '18px' : '4px';
-    bubble.style.borderBottomRightRadius = data.sender === username ? '4px' : '18px';
-
-    bubble.innerHTML = `
-      <div class="fw-semibold mb-1 small">
-        ${data.sender === username ? 'Вы' : data.sender}
-      </div>
-      <div style="white-space: pre-wrap;">${data.message}</div>
-      <div class="text-end mt-1" style="font-size: 0.7rem; opacity: 0.7;">
-        ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-      </div>
-    `;
-
-    wrapper.appendChild(bubble);
-    chatLog.appendChild(wrapper);
+    const newMsg = createMessageElement(data);
+    chatLog.appendChild(newMsg);
     chatLog.scrollTop = chatLog.scrollHeight;
   };
 
   chatSocket.onclose = function(e) {
-    console.error("Chat socket closed unexpectedly");
+    console.error('Chat socket closed unexpectedly');
   };
 
-  document.getElementById("chat-form").onsubmit = function(e) {
+  document.getElementById('chat-form').onsubmit = function(e) {
     e.preventDefault();
-    const input = document.getElementById("chat-message-input");
+    const input = document.getElementById('chat-message-input');
     const message = input.value.trim();
-    if (message !== "") {
+    if (message !== '') {
       chatSocket.send(JSON.stringify({
         message: message,
         username: username
       }));
-      input.value = "";
+      input.value = '';
     }
   };
 
-  // Автопрокрутка при загрузке страницы
+  // Прокрутка к последнему сообщению при загрузке
   chatLog.scrollTop = chatLog.scrollHeight;
 </script>
 {% endblock %}

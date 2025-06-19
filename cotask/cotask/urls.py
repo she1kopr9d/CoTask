@@ -11,7 +11,6 @@ urlpatterns = [
     django.urls.path("admin/", django.contrib.admin.site.urls),
 ]
 
-
 urlpatterns += [
     django.urls.path("i18n/", django.urls.include("django.conf.urls.i18n")),
 ]
@@ -31,4 +30,8 @@ if cotask.settings.DEBUG:
     urlpatterns += django.conf.urls.static.static(
         cotask.settings.MEDIA_URL,
         document_root=cotask.settings.MEDIA_ROOT,
+    )
+    urlpatterns += django.conf.urls.static.static(
+        cotask.settings.STATIC_URL,
+        document_root=cotask.settings.STATIC_ROOT,
     )
